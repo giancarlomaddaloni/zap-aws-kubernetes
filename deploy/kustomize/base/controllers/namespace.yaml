@@ -13,16 +13,6 @@ metadata:
     aws-observability: enabled
 
 
----
-
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: istio-system
-  labels:
-    aws-observability: enabled
-
-
 
 ---
 

@@ -27,6 +27,14 @@ jobs:
           "ghcr.io/zaproxy/zaproxy:": "${ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/zaproxy/zaproxy"
         }
 
+    
+      CORBIE_FLUXCD: "0.35.0"
+      CORBIE_FLUXCD_ECR_MAP: |
+        {
+          "ghcr.io/fluxcd/flagger-loadtester": "${ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/fluxcd/flagger-loadtester"
+        }
+
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
