@@ -7,6 +7,8 @@ resources:
   - flagger.crds.yaml
   - aws-load-balancer-controller.crds.yaml
   - namespace.yaml
+  - podinfo-canary.yaml
+
   # Disabling since passwords and critical data got masked. 
   # If you need to update secrets and efs, add the right account ID access_points id's,  domains and emails. 
   #- issuer-letsencrypt.yaml

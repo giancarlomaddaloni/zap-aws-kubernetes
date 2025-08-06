@@ -3,6 +3,7 @@ apiVersion: appmesh.k8s.aws/v1beta2
 kind: VirtualNode
 metadata:
   name: {{ include "loadtester.fullname" . }}
+  namespace: {{ .Values.serviceAccountName }}
   labels:
     app.kubernetes.io/name: {{ include "loadtester.name" . }}
     helm.sh/chart: {{ include "loadtester.chart" . }}

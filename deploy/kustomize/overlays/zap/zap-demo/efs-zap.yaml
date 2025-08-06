@@ -20,35 +20,20 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  labels:
+    app.kubernetes.io/name: zap
   name: zap-pv
+  namespace: zap-demo
 spec:
-  storageClassName: efs-mender-sc
+  storageClassName: dynamic-slrs-blob-fuse
   capacity:
-    storage: 8Gi
+    storage: 50Mi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   volumeMode: Filesystem
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-xxxx::fsap-xxxx
+    volumeHandle: fs-0dad7a0e4a43fe6de::fsap-08acace089520bd22
     volumeAttributes:
       encryptInTransit: "false" 
-
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: efs-mongodb-pvc
-  namespace: mender
-  annotations: 
-    volume.beta.kubernetes.io/storage-class: "efs-mender-sc"
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: efs-mender-sc
-  resources:
-    requests:
-      storage: 8Gi
-  volumeName: efs-mongodb-pv

@@ -154,7 +154,7 @@ image:
 
   # The container image for the cert-manager controller.
   # +docs:property
-  repository: 1xxxxxxxxxxxx0.dkr.ecr.us-east-1.amazonaws.com/corbie-cert-manager/controller
+  repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/corbie-cert-manager/controller
 
   # Override the image tag to deploy by setting this variable.
   # If no value is set, the chart's appVersion is used.
@@ -890,7 +890,7 @@ webhook:
 
     # The container image for the cert-manager webhook
     # +docs:property
-    repository: 1xxxxxxxxxxxx0.dkr.ecr.us-east-1.amazonaws.com/corbie-cert-manager/webhook
+    repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/corbie-cert-manager/webhook
 
     # Override the image tag to deploy by setting this variable.
     # If no value is set, the chart's appVersion will be used.
@@ -1199,7 +1199,7 @@ cainjector:
 
     # The container image for the cert-manager cainjector
     # +docs:property
-    repository: 1xxxxxxxxxxxx0.dkr.ecr.us-east-1.amazonaws.com/corbie-cert-manager/cainjector
+    repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/corbie-cert-manager/cainjector
 
     # Override the image tag to deploy by setting this variable.
     # If no value is set, the chart's appVersion will be used.
@@ -1258,7 +1258,7 @@ acmesolver:
 
     # The container image for the cert-manager acmesolver.
     # +docs:property
-    repository: 1xxxxxxxxxxxx0.dkr.ecr.us-east-1.amazonaws.com/corbie-cert-manager/acmesolver
+    repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com//corbie-cert-manager/acmesolver
 
     # Override the image tag to deploy by setting this variable.
     # If no value is set, the chart's appVersion is used.
@@ -1391,7 +1391,7 @@ startupapicheck:
 
     # The container image for the cert-manager startupapicheck.
     # +docs:property
-    repository: 1xxxxxxxxxxxx0.dkr.ecr.us-east-1.amazonaws.com/corbie-cert-manager/startupapicheck
+    repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com//corbie-cert-manager/startupapicheck
 
     # Override the image tag to deploy by setting this variable.
     # If no value is set, the chart's appVersion is used.

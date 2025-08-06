@@ -16,10 +16,10 @@ data:
             pollFrequency: 60
             pollUnits: requests
         excludePaths:
-        - http://podinfo:9898/panic
-        - http://podinfo:9898/status/10
+        - http://podinfo.zap-demo.svc.cluster.local:9898/panic
+        - http://podinfo.zap-demo.svc.cluster.local:9898/status/10
         includePaths:
-        - http://podinfo:9898.*
+        - http://podinfo.zap-demo.svc.cluster.local:9898.*
         name: Default Context
         sessionManagement:
           method: cookie
@@ -27,7 +27,7 @@ data:
         technology:
           exclude: []
         urls:
-        - http://podinfo:9898
+        - http://podinfo.zap-demo.svc.cluster.local:9898
       parameters:
         failOnError: false
         failOnWarning: false
@@ -41,8 +41,8 @@ data:
       type: delay
     - name: openapi
       parameters:
-        apiUrl: http://podinfo:9898/swagger.json
-        targetUrl: http://podinfo:9898
+        apiUrl: http://podinfo.zap-demo.svc.cluster.local:9898/swagger.json
+        targetUrl: http://podinfo.zap-demo.svc.cluster.local:9898
         context: Default Context
       type: openapi
     - name: activeScan

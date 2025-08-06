@@ -7,7 +7,8 @@ kind: ClusterRole
 kind: Role
 {{- end }}
 metadata:
-  name: {{ template "loadtester.fullname" . }}
+  name: {{ template "loadtester.fullname" . }}  
+  namespace: {{ .Values.namespace }}
   labels:
     helm.sh/chart: {{ template "loadtester.chart" . }}
     app.kubernetes.io/name: {{ template "loadtester.name" . }}

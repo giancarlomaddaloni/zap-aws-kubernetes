@@ -12,9 +12,9 @@ locals {
     instance_types = ["t3a.small"]
     capacity_type  = "ON_DEMAND"
     cluster_service_cidr = "172.20.0.0/16"
-    min_size     = 1
-    max_size     = 4
-    desired_size = 2
+    min_size     = 2
+    max_size     = 6
+    desired_size = 4
     node_group_name = "${local.project_name}-node-group"
     iam_role_name   = "${local.project_name}-eks-node-role"
 

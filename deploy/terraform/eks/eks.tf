@@ -115,25 +115,6 @@ module "corbie_eks" {
           }
         }
       }
-    },
-    terraform_deploy = {
-      kubernetes_groups = [] 
-      principal_arn     = "arn:aws:iam::593518286265:user/terraform-deploy"
-      policy_associations = {
-        namespace = {
-          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
-          access_scope = {
-            namespaces = local.k8s_parameters.namespace_access
-            type       = "namespace"
-          }
-        },
-        cluster = {
-          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-          access_scope = {
-            type       = "cluster"
-          }
-        }
-      }
     }
   }
 

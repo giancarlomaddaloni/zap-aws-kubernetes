@@ -5,7 +5,7 @@ metadata:
   namespace: zap-demo
 spec:
   schedule: "* * * * *"
-  suspend: true
+  suspend: False
   jobTemplate:
     spec:
       backoffLimit: 0
@@ -28,7 +28,7 @@ spec:
             - api.addrs.addr.name=.*
             - -config
             - api.addrs.addr.regex=true
-            image: ghcr.io/zaproxy/zaproxy:stable
+            image: 593518286265.dkr.ecr.us-east-1.amazonaws.com/zaproxy/zaproxy:latest
             name: zaproxy
             ports:
             - containerPort: 8080

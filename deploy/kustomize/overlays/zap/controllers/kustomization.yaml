@@ -4,11 +4,7 @@ kind: Kustomization
 
 resources: 
   - ../../../base/controllers/
-  # Disabling since passwords and critical data got masked. 
-  # If you need to update secrets and efs, add the right account ID access_points id's,  domains and emails. 
-  # - issuer-letsencrypt.yaml
-
-
+  - loadtester-sa.yaml
 
 generatorOptions:
  disableNameSuffixHash: true
@@ -31,24 +27,9 @@ helmCharts:
   includeCRDs: false
   version: v2.13.3
 
-- name: flagger-loadtester
+- name: loadtester
   releaseName: loadtester
   namespace: zap-demo
   valuesFile:  ./flagger-loadtester.yaml
-  includeCRDs: true
+  includeCRDs: false
   version: 0.35.0
-
-
-# - name: istio-base
-#   releaseName: base
-#   namespace: istio-system
-#   valuesFile:  ./istio-base.yaml
-#   includeCRDs: true
-#   version: 1.0.0
-
-# - name: istiod
-#   releaseName: istiod
-#   namespace: istio-system
-#   valuesFile:  ./istio.yaml
-#   includeCRDs: false
-#   version: 1.0.0

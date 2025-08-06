@@ -13,9 +13,7 @@ metadata:
     aws-observability: enabled
 
 
-
 ---
-
 
 apiVersion: v1
 kind: Namespace

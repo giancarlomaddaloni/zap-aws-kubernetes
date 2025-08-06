@@ -5,6 +5,13 @@ kind: Kustomization
 namespace: zap-demo
 resources: 
   - efs-sc.yaml
+  - efs-zap.yaml
+  - zap-cm.yaml
+  - zap-cronjob.yaml
+  - zap-svc.yaml
+  - zap-canary.yaml
+  - podinfo-deployment.yaml
+  - podinfo-service.yaml
 
 
 generatorOptions:
