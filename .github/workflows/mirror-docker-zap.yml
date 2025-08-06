@@ -21,7 +21,7 @@ jobs:
           "ghcr.io/stefanprodan/podinfo": "${ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/stefanprodan/podinfo"
         }
     
-      CORBIE_ZAP_PROXY: "stable"
+      CORBIE_ZAP_PROXY: "latest"
       CORBIE_ZAP_PROXY_ECR_MAP: |
         {
           "ghcr.io/zaproxy/zaproxy:": "${ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/zaproxy/zaproxy"
