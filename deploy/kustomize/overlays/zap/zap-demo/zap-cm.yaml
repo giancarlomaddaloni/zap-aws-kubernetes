@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: zap
+  name: zap-config
+  namespace: zap-demo
+data:
+  af-plan.yaml: |
+    env:
+      contexts:
+      - authentication:
+          parameters: {}
+          verification:
+            method: response
+            pollFrequency: 60
+            pollUnits: requests
+        excludePaths:
+        - http://podinfo:9898/panic
+        - http://podinfo:9898/status/10
+        includePaths:
+        - http://podinfo:9898.*
+        name: Default Context
+        sessionManagement:
+          method: cookie
+          parameters: {}
+        technology:
+          exclude: []
+        urls:
+        - http://podinfo:9898
+      parameters:
+        failOnError: false
+        failOnWarning: false
+        progressToStdout: true
+      vars: {}
+    jobs:
+    - name: delay
+      parameters:
+        fileName: ""
+        time: "600"
+      type: delay
+    - name: openapi
+      parameters:
+        apiUrl: http://podinfo:9898/swagger.json
+        targetUrl: http://podinfo:9898
+        context: Default Context
+      type: openapi
+    - name: activeScan
+      parameters:
+        context: Default Context
+        maxAlertsPerRule: 0
+        maxRuleDurationInMins: 0
+        maxScanDurationInMins: 0
+        policy: ""
+        threadPerHost: 2
+        user: ""
+      policyDefinition:
+        defaultStrength: medium
+        defaultThreshold: medium
+        rules: []
+      type: activeScan
+    - name: pdf-report
+      parameters:
+        reportDescription: ""
+        reportDir: /zap/reports
+        reportTitle: ZAP Scanning Report
+        template: traditional-pdf
+      risks:
+      - info
+      - low
+      - medium
+      - high
+      confidences:
+      - low
+      - medium
+      - high
+      - confirmed
+      sections:
+      - instancecount
+      - alertdetails
+      - alertcount
+      type: report
+    - name: sarif-report
+      parameters:
+        template: sarif-json
+        reportDir: /zap/reports
+        reportTitle: ZAP Scanning Report
+        reportDescription: ""
+        displayReport: false
+      risks:
+      - low
+      - medium
+      - high
+      confidences:
+      - low
+      - medium
+      - high
+      - confirmed
+      sites: []
+      type: report

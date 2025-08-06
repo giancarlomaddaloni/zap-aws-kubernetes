@@ -1,0 +1,39 @@
+.terraform/
+
+# Terraform state files
+*.tfstate
+*.tfstate.backup
+
+# Crash log (debug output)
+crash.log
+
+# Ignore override files (local environment configs)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform variable files with sensitive data
+*.tfvars
+*.tfvars.json
+
+# Plan output files
+*.plan
+
+# CLI configuration (terraform login credentials)
+.terraformrc
+terraform.rc
+
+# Secrets or sensitive values (optional - customize for your workflow)
+secrets.auto.tfvars
+.env
+*.pem
+*.key
+*.crt
+
+# Ignore backup files created by editors
+*~
+*.swp
+.DS_Store
+.idea/
+.vscode/

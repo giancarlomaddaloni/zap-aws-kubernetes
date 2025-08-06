@@ -1,0 +1,14 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: dynamic-slrs-blob-fuse
+provisioner: efs.csi.aws.com
+parameters:
+  provisioningMode: efs-ap
+  fileSystemId: fs-0dad7a0e4a43fe6de
+  directoryPerms: "700"
+  gidRangeStart: "1000"
+  gidRangeEnd: "2000"
+  basePath: "/"
+reclaimPolicy: Retain
+volumeBindingMode: Immediate

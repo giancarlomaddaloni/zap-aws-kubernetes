@@ -1,0 +1,45 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: podinfo
+  namespace: zap-demo
+spec:
+  provider: kubernetes
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: podinfo
+  # the maximum time in seconds for the canary deployment
+  # to make progress before it is rollback (default 600s)
+  progressDeadlineSeconds: 600
+  service:
+    port: 9898
+    targetPort: http
+    portDiscovery: true
+  skipAnalysis: false
+  analysis:
+    # schedule interval (default 60s)
+    interval: 30s
+    # max number of failed metric checks before rollback
+    threshold: 2
+    # total number of iterations
+    iterations: 2
+    webhooks:
+    - name: start zap
+      type: confirm-rollout
+      url: http://flagger-loadtester.zap-demo/
+      timeout: 3m
+      metadata:
+        type: bash
+        cmd: "r=$RANDOM && kubectl create job -n zap-demo --from=cronjob/zap zap-job-${r} && kubectl wait --for=jsonpath='{.status.ready}'=1 -n zap-demo job/zap-job-${r} --timeout=2m"
+    - name: load test
+      url: http://flagger-loadtester.zap-demo/
+      timeout: 5s
+      metadata:
+        cmd: "hey -z 1m -q 10 -c 2 http://podinfo-canary:9898/"
+    - name: run zap
+      type: post-rollout
+      url: http://flagger-loadtester.zap-demo/
+      timeout: 3m
+      metadata:
+        cmd: "curl http://zap:8080/JSON/automation/action/endDelayJob"

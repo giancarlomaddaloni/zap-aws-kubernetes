@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: zap
+  namespace: zap-demo
+spec:
+  schedule: "* * * * *"
+  suspend: true
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: zap
+        spec:
+          containers:
+          - args:
+            - ./zap.sh
+            - -cmd
+            - -autorun
+            - /zap/config/af-plan.yaml
+            - -host
+            - 0.0.0.0
+            - -config
+            - api.disablekey=true
+            - -config
+            - api.addrs.addr.name=.*
+            - -config
+            - api.addrs.addr.regex=true
+            image: ghcr.io/zaproxy/zaproxy:stable
+            name: zaproxy
+            ports:
+            - containerPort: 8080
+              name: zaproxy
+              protocol: TCP
+            startupProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /
+                port: 8080
+                scheme: HTTP
+              initialDelaySeconds: 60
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 3
+            volumeMounts:
+            - mountPath: /zap/config
+              name: config
+            - mountPath: /zap/reports
+              name: pvc
+          restartPolicy: Never
+          volumes:
+          - name: config
+            configMap:
+              name: zap-config
+          - name: pvc
+            persistentVolumeClaim:
+              claimName: zap-pvc

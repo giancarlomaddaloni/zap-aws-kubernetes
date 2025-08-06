@@ -1,0 +1,95 @@
+name: Mirror Zap Images to ECR
+
+on:
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    name: Mirror Zap Images to ECR
+    runs-on: ubuntu-latest
+
+
+    env:
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      ACCOUNT: ${{ secrets.ACCOUNT }}
+
+      IMAGE_GROUPS: "CORBIE_POD_INFO CORBIE_ZAP_PROXY CORBIE_FLUXCD"
+
+      CORBIE_POD_INFO: "6.7.0"
+      CORBIE_POD_INFO_ECR_MAP: |
+        {
+          "ghcr.io/stefanprodan/podinfo": "${ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/stefanprodan/podinfo"
+        }
+    
+      CORBIE_ZAP_PROXY: "stable"
+      CORBIE_ZAP_PROXY_ECR_MAP: |
+        {
+          "ghcr.io/zaproxy/zaproxy:": "${ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/zaproxy/zaproxy"
+        }
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Mirror Images from DockerHub to ECR
+        run: |
+          set -euo pipefail
+
+          for GROUP in $IMAGE_GROUPS; do
+            TAG_VAR="${GROUP}"
+            MAP_VAR="${GROUP}_ECR_MAP"
+
+            TAG="${!TAG_VAR}"
+            RAW_MAP="${!MAP_VAR}"
+
+            MAP=$(echo "$RAW_MAP" | envsubst)
+
+            echo "Processing group: $GROUP"
+            echo "Using tag: $TAG"
+
+            if ! echo "$MAP" | jq empty; then
+              echo "Invalid JSON in map for $GROUP"
+              continue
+            fi
+
+            unset IMAGES || true
+            declare -A IMAGES
+
+            while IFS="=" read -r src dst; do
+              src_clean="$(echo "$src" | xargs)"
+              dst_clean="$(echo "$dst" | xargs)"
+              IMAGES["$src_clean"]="$dst_clean"
+            done < <(echo "$MAP" | jq -r 'to_entries[] | "\(.key)=\(.value)"')
+
+            for SRC_IMAGE in "${!IMAGES[@]}"; do
+              DST_IMAGE="${IMAGES[$SRC_IMAGE]}"
+              
+              echo "Checking availability of $SRC_IMAGE:$TAG"
+              if ! docker manifest inspect "$SRC_IMAGE:$TAG" > /dev/null 2>&1; then
+                echo "Image not found: $SRC_IMAGE:$TAG — skipping"
+                continue
+              fi
+
+              echo "Pulling $SRC_IMAGE:$TAG"
+              docker pull "$SRC_IMAGE:$TAG"
+
+              echo "Tagging $DST_IMAGE:$TAG"
+              docker tag "$SRC_IMAGE:$TAG" "$DST_IMAGE:$TAG"
+
+              echo "Pushing $DST_IMAGE:$TAG"
+              docker push "$DST_IMAGE:$TAG"
+            done
+
+            echo "Finished group: $GROUP"
+            echo ""
+          done
