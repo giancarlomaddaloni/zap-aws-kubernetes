@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "corbie-tf-states"
+    bucket         = "zap-tf-states"
     key            = "dependencies/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true
