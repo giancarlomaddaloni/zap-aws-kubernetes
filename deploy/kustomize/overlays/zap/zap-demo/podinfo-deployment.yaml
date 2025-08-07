@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: podinfod
-        image: 593518286265.dkr.ecr.us-east-1.amazonaws.com/stefanprodan/podinfo:6.7.0
+        image: 1xxxxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/stefanprodan/podinfo:6.7.0
         ports:
         - name: http
           containerPort: 9898

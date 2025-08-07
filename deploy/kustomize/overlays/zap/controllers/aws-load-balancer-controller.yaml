@@ -7,7 +7,7 @@ replicaCount: 2
 revisionHistoryLimit: 10
 
 image:
-  repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/corbie-lb-eks
+  repository: 1xxxxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/corbie-lb-eks
   tag: v2.13.3
   pullPolicy: IfNotPresent
 
@@ -32,7 +32,7 @@ serviceAccount:
   create: true
   # Annotations to add to the service account
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::593518286265:role/corbie-lb-sa
+    eks.amazonaws.com/role-arn: arn:aws:iam::1xxxxxxxxxxxxx:role/corbie-lb-sa
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name:

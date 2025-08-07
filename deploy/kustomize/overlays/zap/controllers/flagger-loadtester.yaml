@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/fluxcd/flagger-loadtester
+  repository: 1xxxxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/fluxcd/flagger-loadtester
   tag: 0.35.0
   pullPolicy: IfNotPresent
   pullSecret:

@@ -23,7 +23,7 @@ module "corbie_eks" {
   access_entries = {
     federated_giancarlo_maddaloni = {
       kubernetes_groups = [] 
-      principal_arn     = "arn:aws:sts::593518286265:federated-user/GiancarloMaddaloni"
+      principal_arn     = "arn:aws:sts::1xxxxxxxxxxxxx:federated-user/GiancarloMaddaloni"
       policy_associations = {
         namespace = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
@@ -42,7 +42,7 @@ module "corbie_eks" {
     },
     federated_rodrigo_espinoza = {
       kubernetes_groups = [] 
-      principal_arn     = "arn:aws:sts::593518286265:federated-user/RodrigoEspinoza"
+      principal_arn     = "arn:aws:sts::1xxxxxxxxxxxxx:federated-user/RodrigoEspinoza"
       policy_associations = {
         namespace = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
@@ -61,7 +61,7 @@ module "corbie_eks" {
     },
     federated_terraform_deploy = {
       kubernetes_groups = [] 
-      principal_arn     = "arn:aws:sts::593518286265:federated-user/terraform-deploy"
+      principal_arn     = "arn:aws:sts::1xxxxxxxxxxxxx:federated-user/terraform-deploy"
       policy_associations = {
         namespace = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
@@ -80,7 +80,7 @@ module "corbie_eks" {
     },
     giancarlo_maddaloni = {
       kubernetes_groups = [] 
-      principal_arn     = "arn:aws:iam::593518286265:user/GiancarloMaddaloni"
+      principal_arn     = "arn:aws:iam::1xxxxxxxxxxxxx:user/GiancarloMaddaloni"
       policy_associations = {
         namespace = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
@@ -99,7 +99,7 @@ module "corbie_eks" {
     },
     rodrigo_espinoza = {
       kubernetes_groups = [] 
-      principal_arn     = "arn:aws:iam::593518286265:user/RodrigoEspinoza"
+      principal_arn     = "arn:aws:iam::1xxxxxxxxxxxxx:user/RodrigoEspinoza"
       policy_associations = {
         namespace = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
