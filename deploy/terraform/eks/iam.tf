@@ -150,7 +150,7 @@ module "corbie_efs_role" {
   oidc_providers = {
     ex = {
       provider_arn               = module.corbie_eks.oidc_provider_arn
-      namespace_service_accounts = ["kube-system:efs-sa", "corbie:efs-sa", "corbie:mongodb"]
+      namespace_service_accounts = ["kube-system:efs-sa", "kube-system:efs-csi-controller-sa", "zap-demo:efs-csi-controller-sa", "kube-system:efs-csi-node-sa"]
     }
   }
 }

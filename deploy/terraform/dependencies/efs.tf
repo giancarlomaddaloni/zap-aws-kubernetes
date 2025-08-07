@@ -24,6 +24,9 @@ module "corbie_efs" {
     "us-east-1b" = {
       subnet_id = module.corbie_vpc.private_subnets[1]
     }
+    "us-east-1c" = {
+      subnet_id = module.corbie_vpc.private_subnets[2]
+    }
   }
   security_group_description = "EFS corbie SG"
   security_group_vpc_id      = module.corbie_vpc.vpc_id
