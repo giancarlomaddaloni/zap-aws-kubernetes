@@ -54,7 +54,7 @@ jobs:
       AWS_APPMESH_ENVOY_TAG: "v1.29.6.0-prod"
       AWS_APPMESH_ENVOY_ECR_MAP: |
         {
-          "public.ecr.aws/appmesh/aws-appmesh-envoy:": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/aws-appmesh-envoy"
+          "public.ecr.aws/appmesh/aws-appmesh-envoy": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/aws-appmesh-envoy"
         }
 
 
