@@ -13,6 +13,8 @@ resources:
   - zap-ingress.yaml
   - podinfo-deployment.yaml
   - podinfo-service.yaml
+  - zwagger-deployment.yaml
+  - zwagger-svc.yaml
 
 
 generatorOptions:

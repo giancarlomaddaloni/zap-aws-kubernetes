@@ -7,8 +7,8 @@ locals {
   azs            = slice(data.aws_availability_zones.available.names, 0, 3)
 
 
-  hosted_zone    = "zap.com"
-  domain_name    = "zap.com"
+  hosted_zone    = "corbietechnology.com"
+  domain_name    = "corbietechnology.com"
 
   repositories = [
     "corbie-lb-eks",

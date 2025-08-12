@@ -30,7 +30,7 @@ jobs:
           "public.ecr.aws/eks/aws-load-balancer-controller": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/corbie-lb-eks"
         }
 
-      SWAGGER_UI_TAG: "v2.13.3"
+      SWAGGER_UI_TAG: "v5.27.1"
       SWAGGER_UI_ECR_MAP: |
         {
           "swaggerapi/swagger-ui": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/swaggerapi/swagger-ui"
