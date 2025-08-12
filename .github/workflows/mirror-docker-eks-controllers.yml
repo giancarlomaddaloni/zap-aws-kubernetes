@@ -36,10 +36,10 @@ jobs:
           "docker.swagger.io/swaggerapi/swagger-ui": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/swaggerapi/swagger-ui"
         }
 
-      METRICS_SERVER_TAG: "0.8.0"
+      METRICS_SERVER_TAG: "0.8.0-debian-12-r1"
       METRICS_SERVER_ECR_MAP: |
         {
-          "docker.swagger.io/bitnami/metrics-server": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/bitnami/metrics-server"
+          "docker.io/bitnami/metrics-server": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/bitnami/metrics-server"
         }
 
     

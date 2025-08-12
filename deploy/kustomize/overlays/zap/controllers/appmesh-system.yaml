@@ -3,22 +3,22 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-region: ""
-accountId: ""
+region: "us-east-1"
+accountId: "593518286265"
 preview: false
 enableBackendGroups: false
-clusterName: ""
+clusterName: "corbie-eks"
 useAwsDualStackEndpoint: false
 useAwsFIPSEndpoint: false
 
 image:
-  repository: 840364872350.dkr.ecr.us-west-2.amazonaws.com/amazon/appmesh-controller
+  repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/amazon/appmesh-controller
   tag: v1.13.1
   pullPolicy: IfNotPresent
 
 sidecar:
   image:
-    repository: 840364872350.dkr.ecr.us-west-2.amazonaws.com/aws-appmesh-envoy
+    repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/aws-appmesh-envoy
     tag: v1.29.6.0-prod
     # sidecar.logLevel: Envoy log level can be info, warn, error or debug
   logLevel: info
@@ -48,12 +48,12 @@ sidecar:
   waitUntilProxyReady: false
 init:
   image:
-    repository: 840364872350.dkr.ecr.us-west-2.amazonaws.com/aws-appmesh-proxy-route-manager
+    repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/aws-appmesh-proxy-route-manager
     tag: v7-prod
 
 xray:
   image:
-    repository: public.ecr.aws/xray/aws-xray-daemon
+    repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/xray/aws-xray-daemon
     tag: latest
 
 nameOverride: ""
@@ -93,9 +93,9 @@ sds:
 
 serviceAccount:
   # serviceAccount.create: Whether to create a service account or not
-  create: true
+  create: false
   # serviceAccount.name: The name of the service account to create or use
-  name: ""
+  name: "appmesh-controller"
   # serviceAccount.annotations: optional annotations to be applied to service account
   annotations: {}
 
@@ -107,11 +107,11 @@ rbac:
 
 log:
   #log.level: info (default), debug
-  level: "info"
+  level: "debug"
 
 tracing:
   # tracing.enabled: `true` if Envoy should be configured tracing
-  enabled: false
+  enabled: true
   # tracing.provider: can be x-ray, jaeger or datadog
   provider: x-ray
   # tracing.address: Jaeger or Datadog agent server address (ignored for X-Ray)
