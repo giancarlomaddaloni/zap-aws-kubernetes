@@ -73,7 +73,7 @@ jobs:
 
 
       FLUXCD_FLAGGER_TAG: "1.41.0"
-      FLUXCD_FLAGGER__ECR_MAP: |
+      FLUXCD_FLAGGER_ECR_MAP: |
         {
           "ghcr.io/fluxcd/flagger": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/fluxcd/flagger"
         }
