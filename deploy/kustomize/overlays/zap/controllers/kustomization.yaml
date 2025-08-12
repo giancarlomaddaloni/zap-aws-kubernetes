@@ -40,3 +40,20 @@ helmCharts:
   valuesFile:  ./metrics-server.yaml
   includeCRDs: false
   version: 0.8.0
+
+
+- name: appmesh-controller
+  releaseName: appmesh-controller
+  namespace: appmesh-system
+  valuesFile:  ./appmesh-system.yaml
+  includeCRDs: false
+  version: 1.13.1
+
+
+- name: appmesh-prometheus
+  releaseName: appmesh-prometheus
+  namespace: appmesh-system
+  valuesFile:  ./appmesh-prometheus.yaml
+  includeCRDs: false
+  version: 2.13.1
+  

@@ -12,7 +12,8 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       ACCOUNT: ${{ secrets.ACCOUNT }}
 
-      IMAGE_GROUPS: "CERT_MANAGER LOAD_BALANCER SWAGGER_UI METRICS_SERVER APPMESH_CONTROLLER AWS_APPMESH_ENVOY AWS_APPMESH_PROXY_ROUTE_MANAGER AWS_XRAY_DAEMON"
+      IMAGE_GROUPS: "CERT_MANAGER LOAD_BALANCER SWAGGER_UI METRICS_SERVER APPMESH_CONTROLLER AWS_APPMESH_ENVOY AWS_XRAY_DAEMON PROM_PROMETHEUS"
+      #IMAGE_GROUPS: "CERT_MANAGER LOAD_BALANCER SWAGGER_UI METRICS_SERVER APPMESH_CONTROLLER AWS_APPMESH_ENVOY AWS_APPMESH_PROXY_ROUTE_MANAGER AWS_XRAY_DAEMON"
 
       CERT_MANAGER_TAG: "v1.18.2"
       CERT_MANAGER_ECR_MAP: |
@@ -58,21 +59,24 @@ jobs:
         }
 
 
-
-      AWS_APPMESH_PROXY_ROUTE_MANAGER_TAG: "v7-prod"
-      AWS_APPMESH_PROXY_ROUTE_MANAGER_ECR_MAP: |
-        {
-          "public.ecr.aws/appmesh/aws-appmesh-proxy-route-manager": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/aws-appmesh-proxy-route-manager"
-        }
-
-
       AWS_XRAY_DAEMON_TAG: "latest"
       AWS_XRAY_DAEMON_ECR_MAP: |
         {
           "public.ecr.aws/xray/aws-xray-daemon": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/xray/aws-xray-daemon"
         }
 
+      PROM_PROMETHEUS_TAG: "v2.13.1"
+      PROM_PROMETHEUS_ECR_MAP: |
+        {
+          "prom/prometheus": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/prom/prometheus"
+        }
 
+
+      # AWS_APPMESH_PROXY_ROUTE_MANAGER_TAG: "v7-prod"
+      # AWS_APPMESH_PROXY_ROUTE_MANAGER_ECR_MAP: |
+      #   {
+      #     "public.ecr.aws/appmesh/aws-appmesh-proxy-route-manager": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/aws-appmesh-proxy-route-manager"
+      #   }
 
     steps:
       - name: Checkout
