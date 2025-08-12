@@ -21,3 +21,14 @@ metadata:
   name: zap-demo
   labels:
     aws-observability: enabled
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: appmesh-system
+  labels:
+    aws-observability: enabled
+
+    

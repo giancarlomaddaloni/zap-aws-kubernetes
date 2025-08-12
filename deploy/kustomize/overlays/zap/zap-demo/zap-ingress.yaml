@@ -14,7 +14,7 @@ metadata:
 
     # HTTPS setup
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/245de3b5-b713-4f4d-bdee-8e9af7337fee
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
 
     # Redirect HTTP to HTTPS
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -49,7 +49,7 @@ metadata:
 
     # HTTPS setup
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/245de3b5-b713-4f4d-bdee-8e9af7337fee
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
 
     # Redirect HTTP to HTTPS
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -93,7 +93,7 @@ metadata:
 
     # HTTPS setup
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/245de3b5-b713-4f4d-bdee-8e9af7337fee
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
 
     # Redirect HTTP to HTTPS
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -105,8 +105,8 @@ spec:
   - host: zap-loadtester.sec.corbietechnology.com
     http:
       paths:
-      - path: /
-        pathType: Prefix
+      - path: /healthz
+        pathType: Exact
         backend:
           service:
             name: loadtester

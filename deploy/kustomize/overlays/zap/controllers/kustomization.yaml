@@ -33,3 +33,10 @@ helmCharts:
   valuesFile:  ./flagger-loadtester.yaml
   includeCRDs: false
   version: 0.35.0
+
+- name: metrics-server
+  releaseName: metrics-server
+  namespace: kube-system
+  valuesFile:  ./metrics-server.yaml
+  includeCRDs: false
+  version: 0.8.0

@@ -80,25 +80,25 @@ spec:
     webhooks:
     - name: start zap
       type: confirm-rollout
-      url: https://zap-loadtester.sec.corbietechnology.com/
+      url: https://zap-loadtester.sec.corbietechnology.com
       timeout: 3m
       metadata:
         type: bash
         cmd: "r=$RANDOM && kubectl create job -n zap-demo --from=cronjob/zap zap-job-${r} && kubectl wait --for=jsonpath='{.status.ready}'=1 -n zap-demo job/zap-job-${r} --timeout=2m"
     - name: integration test
       type: pre-rollout
-      url: https://zap-loadtester.sec.corbietechnology.com/
+      url: https://zap-loadtester.sec.corbietechnology.com
       metadata:
         cmd: "curl --proxy https://zap.sec.corbietechnology.com https://zap-podinfo.sec.corbietechnology.com/api/info"
       timeout: 3m
     - name: load test
-      url: https://zap-loadtester.sec.corbietechnology.com/
+      url: https://zap-loadtester.sec.corbietechnology.com
       timeout: 5s
       metadata:
-        cmd: "hey -z 1m -q 10 -c 2 https://zap-podinfo.sec.corbietechnology.com/"
+        cmd: "hey -z 1m -q 10 -c 2 https://zap-podinfo.sec.corbietechnology.com"
     - name: run zap
       type: post-rollout
-      url: https://zap-loadtester.sec.corbietechnology.com/
+      url: https://zap-loadtester.sec.corbietechnology.com
       timeout: 3m
       metadata:
         cmd: "curl https://zap.sec.corbietechnology.com/JSON/automation/action/endDelayJob"

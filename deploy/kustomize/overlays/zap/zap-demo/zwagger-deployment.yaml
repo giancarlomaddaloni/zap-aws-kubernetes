@@ -13,9 +13,13 @@ spec:
       - name: swagger-ui
         image: 593518286265.dkr.ecr.us-east-1.amazonaws.com/swaggerapi/swagger-ui:v5.27.1
         env:
-          # IMPORTANT: relative path => same origin, no CORS
-          - name: SWAGGER_JSON_URL
-            value: "/swagger.json"
+          # Serve the app under /docs (so /docs works behind ALB)
+          - name: BASE_URL
+            value: /docs
+          # Load the spec from the same origin (no CORS)
+          # Use the real path your API serves it at:
+          - name: URL
+            value: /swagger.json
         ports:
         - containerPort: 8080
 ---

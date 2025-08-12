@@ -20,7 +20,13 @@ locals {
     "stefanprodan/podinfo",
     "zaproxy/zaproxy",
     "fluxcd/flagger-loadtester",
-    "swaggerapi/swagger-ui"
+    "swaggerapi/swagger-ui",
+    "bitnami/metrics-server",
+    "amazon/appmesh-controller",
+    "aws-appmesh-envoy",
+    "aws-appmesh-proxy-route-manager",
+    "xray/aws-xray-daemon"
+
   ]
 
 

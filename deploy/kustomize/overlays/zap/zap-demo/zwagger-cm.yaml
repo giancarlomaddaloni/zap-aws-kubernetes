@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: swagger-ui-config
+  namespace: zap-demo
+data:
+  swagger-initializer.js: |
+    window.ui = SwaggerUIBundle({
+      url: "/swagger.json",
+      dom_id: '#swagger-ui',
+      docExpansion: 'list',
+      displayRequestDuration: true,
+      tryItOutEnabled: true,
+      persistAuthorization: true,
+    });
