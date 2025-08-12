@@ -5,10 +5,10 @@ metadata:
   namespace: zap-demo
 spec:
   schedule: "* * * * *"
-  suspend: False
+  suspend: true
   jobTemplate:
     spec:
-      backoffLimit: 0
+      backoffLimit: 2
       template:
         metadata:
           labels:
@@ -28,19 +28,19 @@ spec:
             - api.addrs.addr.name=.*
             - -config
             - api.addrs.addr.regex=true
-            image: 1xxxxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/zaproxy/zaproxy:latest
+            image: 593518286265.dkr.ecr.us-east-1.amazonaws.com/zaproxy/zaproxy:latest
             name: zaproxy
             ports:
             - containerPort: 8080
               name: zaproxy
               protocol: TCP
             startupProbe:
-              failureThreshold: 3
+              failureThreshold: 12
               httpGet:
                 path: /
                 port: 8080
                 scheme: HTTP
-              initialDelaySeconds: 60
+              initialDelaySeconds: 120
               periodSeconds: 10
               successThreshold: 1
               timeoutSeconds: 3

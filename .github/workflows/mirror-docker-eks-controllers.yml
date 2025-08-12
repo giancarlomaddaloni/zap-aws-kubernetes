@@ -12,7 +12,7 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       ACCOUNT: ${{ secrets.ACCOUNT }}
 
-      IMAGE_GROUPS: "CERT_MANAGER LOAD_BALANCER"
+      IMAGE_GROUPS: "CERT_MANAGER LOAD_BALANCER SWAGGER_UI"
 
       CERT_MANAGER_TAG: "v1.18.2"
       CERT_MANAGER_ECR_MAP: |
@@ -28,6 +28,12 @@ jobs:
       LOAD_BALANCER_ECR_MAP: |
         {
           "public.ecr.aws/eks/aws-load-balancer-controller": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/corbie-lb-eks"
+        }
+
+      SWAGGER_UI_TAG: "v2.13.3"
+      SWAGGER_UI_ECR_MAP: |
+        {
+          "swaggerapi/swagger-ui": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/swaggerapi/swagger-ui"
         }
 
     steps:

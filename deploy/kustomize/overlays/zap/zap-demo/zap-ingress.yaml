@@ -1,0 +1,105 @@
+# Ingress for zap + podinfo (default health checks or their own)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zap-main
+  namespace: zap-demo
+  annotations:
+    kubernetes.io/ingress.class: alb
+    # ALB configuration
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: corbie-sec
+    alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27, subnet-04adb4301abb5d25d, subnet-0ed1b6f76c8e8a377
+
+    # HTTPS setup
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+
+    # Redirect HTTP to HTTPS
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+
+spec:
+  ingressClassName: alb
+  rules:
+  - host: zap.sec.corbietechnology.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: zap
+            port:
+              number: 8080
+---
+# Ingress for zap + podinfo (default health checks or their own)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zap-podinfo
+  namespace: zap-demo
+  annotations:
+    kubernetes.io/ingress.class: alb
+    # ALB configuration
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: corbie-sec
+    alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27, subnet-04adb4301abb5d25d, subnet-0ed1b6f76c8e8a377
+
+    # HTTPS setup
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+
+    # Redirect HTTP to HTTPS
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+
+spec:
+  ingressClassName: alb
+  rules:
+  - host: zap-podinfo.sec.corbietechnology.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: podinfo
+            port:
+              number: 9898
+---
+# Ingress ONLY for loadtester with its own healthcheck path
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zap-loadtester
+  namespace: zap-demo
+  annotations:
+    kubernetes.io/ingress.class: alb
+    # ALB configuration
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: corbie-sec
+    alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27, subnet-04adb4301abb5d25d, subnet-0ed1b6f76c8e8a377
+
+    # HTTPS setup
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+
+    # Redirect HTTP to HTTPS
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/healthcheck-path: /healthz
+
+spec:
+  ingressClassName: alb
+  rules:
+  - host: zap-loadtester.sec.corbietechnology.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: loadtester
+            port:
+              number: 80

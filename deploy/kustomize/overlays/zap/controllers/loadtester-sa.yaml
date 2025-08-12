@@ -4,4 +4,4 @@ metadata:
   name: loadtester
   namespace: zap-demo
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::1xxxxxxxxxxxxx:role/corbie-sa
+    eks.amazonaws.com/role-arn: arn:aws:iam::593518286265:role/corbie-sa

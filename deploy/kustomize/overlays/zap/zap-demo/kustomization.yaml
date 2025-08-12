@@ -10,6 +10,7 @@ resources:
   - zap-cronjob.yaml
   - zap-svc.yaml
   - zap-canary.yaml
+  - zap-ingress.yaml
   - podinfo-deployment.yaml
   - podinfo-service.yaml
 

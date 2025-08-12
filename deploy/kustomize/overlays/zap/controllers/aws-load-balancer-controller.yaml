@@ -7,7 +7,7 @@ replicaCount: 2
 revisionHistoryLimit: 10
 
 image:
-  repository: 1xxxxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/corbie-lb-eks
+  repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/corbie-lb-eks
   tag: v2.13.3
   pullPolicy: IfNotPresent
 
@@ -32,7 +32,7 @@ serviceAccount:
   create: true
   # Annotations to add to the service account
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::1xxxxxxxxxxxxx:role/corbie-lb-sa
+    eks.amazonaws.com/role-arn: arn:aws:iam::593518286265:role/corbie-lb-sa
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name:
@@ -165,7 +165,7 @@ createIngressClassResource: true
 region: us-east-1
 
 # The VPC ID for the Kubernetes cluster. Set this manually when your pods are unable to use the metadata service to determine this automatically
-vpcId: vpc-029870b662c981215
+vpcId: vpc-04888055e1dcaec4c
 
 # This is alternative to vpcId. Set this when your pods are unable to use the metadata service to determine VPC automatically.
 vpcTags: {}

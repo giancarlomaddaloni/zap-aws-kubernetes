@@ -7,8 +7,8 @@ locals {
   azs            = slice(data.aws_availability_zones.available.names, 0, 3)
 
 
-  hosted_zone    = "corbietech.com"
-  domain_name    = "corbietech.com"
+  hosted_zone    = "zap.com"
+  domain_name    = "zap.com"
 
   repositories = [
     "corbie-lb-eks",
@@ -19,7 +19,8 @@ locals {
     "corbie-cert-manager/webhook",
     "stefanprodan/podinfo",
     "zaproxy/zaproxy",
-    "fluxcd/flagger-loadtester"
+    "fluxcd/flagger-loadtester",
+    "swaggerapi/swagger-ui"
   ]
 
 
