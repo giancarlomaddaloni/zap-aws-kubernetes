@@ -2,6 +2,7 @@
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
+  namespace: {{ .Release.Namespace }}
   name: {{ template "appmesh-prometheus.fullname" . }}
   labels:
 {{ include "appmesh-prometheus.labels" . | indent 4 }}

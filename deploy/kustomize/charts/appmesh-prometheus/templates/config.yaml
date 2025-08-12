@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: {{ .Release.Namespace }}
   name: {{ template "appmesh-prometheus.fullname" . }}
   labels:
 {{ include "appmesh-prometheus.labels" . | indent 4 }}

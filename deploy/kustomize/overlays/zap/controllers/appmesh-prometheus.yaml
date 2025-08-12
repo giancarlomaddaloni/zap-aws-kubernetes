@@ -8,7 +8,7 @@ scrapeInterval: 5s
 replicaCount: 1
 
 image:
-  repository: prom/prometheus
+  repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/prom/prometheus
   tag: v2.13.1
   pullPolicy: IfNotPresent
 
@@ -33,6 +33,7 @@ tolerations: []
 
 affinity: {}
 
+namespace: appmesh-system
 serviceAccount:
   # serviceAccount.create: Whether to create a service account or not
   create: true

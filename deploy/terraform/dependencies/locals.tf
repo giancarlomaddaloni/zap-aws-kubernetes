@@ -25,8 +25,9 @@ locals {
     "amazon/appmesh-controller",
     "aws-appmesh-envoy",
     "aws-appmesh-proxy-route-manager",
-    "xray/aws-xray-daemon"
-
+    "xray/aws-xray-daemon",
+    "prom/prometheus",
+    "fluxcd/flagger"
   ]
 
 

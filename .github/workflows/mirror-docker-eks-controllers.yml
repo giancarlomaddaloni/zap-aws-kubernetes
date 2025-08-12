@@ -12,7 +12,7 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       ACCOUNT: ${{ secrets.ACCOUNT }}
 
-      IMAGE_GROUPS: "CERT_MANAGER LOAD_BALANCER SWAGGER_UI METRICS_SERVER APPMESH_CONTROLLER AWS_APPMESH_ENVOY AWS_XRAY_DAEMON PROM_PROMETHEUS"
+      IMAGE_GROUPS: "CERT_MANAGER LOAD_BALANCER SWAGGER_UI METRICS_SERVER APPMESH_CONTROLLER AWS_APPMESH_ENVOY AWS_XRAY_DAEMON PROM_PROMETHEUS FLUXCD_FLAGGER"
       #IMAGE_GROUPS: "CERT_MANAGER LOAD_BALANCER SWAGGER_UI METRICS_SERVER APPMESH_CONTROLLER AWS_APPMESH_ENVOY AWS_APPMESH_PROXY_ROUTE_MANAGER AWS_XRAY_DAEMON"
 
       CERT_MANAGER_TAG: "v1.18.2"
@@ -68,9 +68,15 @@ jobs:
       PROM_PROMETHEUS_TAG: "v2.13.1"
       PROM_PROMETHEUS_ECR_MAP: |
         {
-          "prom/prometheus": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/prom/prometheus"
+          "docker.io/prom/prometheus": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/prom/prometheus"
         }
 
+
+      FLUXCD_FLAGGER_TAG: "1.41.0"
+      FLUXCD_FLAGGER__ECR_MAP: |
+        {
+          "ghcr.io/fluxcd/flagger": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/fluxcd/flagger"
+        }
 
       # AWS_APPMESH_PROXY_ROUTE_MANAGER_TAG: "v7-prod"
       # AWS_APPMESH_PROXY_ROUTE_MANAGER_ECR_MAP: |
