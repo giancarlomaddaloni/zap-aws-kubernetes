@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: swagger-ui
-        image: 593518286265.dkr.ecr.us-east-1.amazonaws.com/swaggerapi/swagger-ui
+        image: 593518286265.dkr.ecr.us-east-1.amazonaws.com/swaggerapi/swagger-ui:v5.27.1
         env:
           # IMPORTANT: relative path => same origin, no CORS
           - name: SWAGGER_JSON_URL
