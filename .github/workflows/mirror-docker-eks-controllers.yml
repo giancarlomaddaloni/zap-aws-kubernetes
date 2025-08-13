@@ -90,8 +90,6 @@ jobs:
       #   {
       #     "public.ecr.aws/appmesh/aws-appmesh-proxy-route-manager": "${ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/aws-appmesh-proxy-route-manager"
       #   }grafana/grafana
-  tag: 6.4.3
-docker.io/grafana/grafana
 
       
 
