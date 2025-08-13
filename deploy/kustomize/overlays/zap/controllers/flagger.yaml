@@ -4,7 +4,7 @@
 # annotations: {}
 
 image:
-  repository: ghcr.io/fluxcd/flagger
+  repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/fluxcd/flagger
   tag: 1.41.0
   pullPolicy: IfNotPresent
   pullSecret:
@@ -21,7 +21,7 @@ podAnnotations:
 # priority class name for pod priority configuration
 podPriorityClassName: ""
 
-metricsServer: "http://prometheus:9090"
+metricsServer: "https://zap-prometheus.sec.corbietechnology.com/"
 
 # creates serviceMonitor for monitoring Flagger metrics
 serviceMonitor:
@@ -33,10 +33,10 @@ serviceMonitor:
   # labels:
 
 # accepted values are kubernetes, istio, linkerd, appmesh, contour, nginx, gloo, skipper, traefik, apisix, osm
-meshProvider: ""
+meshProvider: "appmesh:v1beta2"
 
 # single namespace restriction
-namespace: ""
+namespace: "appmesh-system"
 
 # list of pod labels that Flagger uses to create pod selectors
 # defaults to: app,name,app.kubernetes.io/name
@@ -64,7 +64,7 @@ securityContext:
 eventWebhook: ""
 
 # when specified, flagger will add the cluster name to alerts
-clusterName: ""
+clusterName: "corbie-eks"
 
 slack:
   user: flagger
@@ -79,7 +79,7 @@ msteams:
 
 podMonitor:
   enabled: false
-  namespace:
+  namespace: appmesh-system
   interval: 15s
   additionalLabels: {}
   honorLabels: false

@@ -27,7 +27,8 @@ locals {
     "aws-appmesh-proxy-route-manager",
     "xray/aws-xray-daemon",
     "prom/prometheus",
-    "fluxcd/flagger"
+    "fluxcd/flagger",
+    "grafana/grafana"
   ]
 
 
