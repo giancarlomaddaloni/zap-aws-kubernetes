@@ -6,9 +6,13 @@ image:
   pullPolicy: IfNotPresent
   pullSecret:
 
-podLabels: {}
+# podLabels:
+#   appmesh.k8s.aws/ports: 8080
 
-namespace: "zap-demo"
+
+
+
+# namespace: "zap-demo"
 
 podAnnotations:
   prometheus.io/scrape: "true"
@@ -28,7 +32,7 @@ env: []
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 
 resources:
   requests:
@@ -60,20 +64,20 @@ rbac:
   serviceAccountAnnotations: {}
 
 # name of an existing service account to use - if not creating rbac resources
-serviceAccountName: ""
+serviceAccountName: "corbie-sa"
 
 # App Mesh virtual node settings (to be used for AppMesh v1beta1)
-meshName: ""
-#backends:
-#  - app1.namespace
-#  - app2.namespace
+# meshName: "global"
+# backends:
+#  - podinfo-primary.zap-demo
+#  - podinfo.zap-demo
 
 # App Mesh virtual node settings (to be used for AppMesh v1beta2)
 appmesh:
-  enabled: false
+  enabled: true
   backends:
-  - podinfo
-  - podinfo-canary
+  - podinfo.zap-demo
+  - podinfo-canary.zap-demo
 
 #Istio virtual service and gatway settings. TLS secrets should be in namespace before enbaled it. ( secret format loadtester.fullname )
 istio:

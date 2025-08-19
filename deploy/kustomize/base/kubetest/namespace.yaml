@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: testkube
+  labels:
+    aws-observability: enabled
+    appmesh.k8s.aws/sidecarInjectorWebhook: disabled
+
+
+    

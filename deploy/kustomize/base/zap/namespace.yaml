@@ -3,6 +3,7 @@ kind: Namespace
 metadata:
   name: cert-manager
 
+
 ---
 
 kind: Namespace
@@ -11,6 +12,8 @@ metadata:
   name: aws-observability
   labels:
     aws-observability: enabled
+    appmesh.k8s.aws/sidecarInjectorWebhook: enabled
+
 
 
 ---
@@ -21,6 +24,8 @@ metadata:
   name: zap-demo
   labels:
     aws-observability: enabled
+    appmesh.k8s.aws/sidecarInjectorWebhook: enabled
+
 
 ---
 
@@ -30,5 +35,7 @@ metadata:
   name: appmesh-system
   labels:
     aws-observability: enabled
+    appmesh.k8s.aws/sidecarInjectorWebhook: enabled
+
 
     

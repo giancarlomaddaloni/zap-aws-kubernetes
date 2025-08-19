@@ -1,0 +1,92 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: appmesh-prometheus
+  namespace: appmesh-system
+  annotations:
+    # ALB config
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: corbie-sec
+    alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27,subnet-04adb4301abb5d25d,subnet-0ed1b6f76c8e8a377
+    # TLS
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    # Health check
+    alb.ingress.kubernetes.io/healthcheck-path: /-/healthy
+spec:
+  ingressClassName: alb
+  rules:
+  - host: zap-prometheus.sec.corbietechnology.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: appmesh-prometheus
+            port:
+              number: 9090
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: appmesh-grafana
+  namespace: appmesh-system
+  annotations:
+    # ALB config
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: corbie-sec
+    alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27,subnet-04adb4301abb5d25d,subnet-0ed1b6f76c8e8a377
+    # TLS
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+    # Health check (Grafana)
+    alb.ingress.kubernetes.io/healthcheck-path: /api/health
+spec:
+  ingressClassName: alb
+  rules:
+  - host: zap-grafana.sec.corbietechnology.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: appmesh-grafanac   # <- fixed
+            port:
+              number: 3000
+
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: appmesh-gateway
+  namespace: appmesh-system
+  annotations:
+    # ALB config
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: corbie-sec
+    alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27,subnet-04adb4301abb5d25d,subnet-0ed1b6f76c8e8a377
+    # TLS
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+    # Health check (Grafana)
+    alb.ingress.kubernetes.io/healthcheck-path: /api/health
+spec:
+  ingressClassName: alb
+  rules:
+  - host: zap-gateway.sec.corbietechnology.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: appmesh-gateway   # <- fixed
+            port:
+              number: 80

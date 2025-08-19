@@ -5,13 +5,14 @@
 replicaCount: 1
 
 image:
-  repository: grafana/grafana
+  repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/grafana/grafana
   tag: 6.4.3
   pullPolicy: IfNotPresent
 
 nameOverride: ""
 fullnameOverride: ""
 
+namespace: appmesh-system
 service:
   type: ClusterIP
   port: 3000
@@ -31,13 +32,13 @@ affinity: {}
 
 serviceAccount:
   # serviceAccount.create: Whether to create a service account or not
-  create: true
+  create: false
   # serviceAccount.name: The name of the service account to create or use
-  name: ""
+  name: "corbie-sa"
 
 rbac:
   # rbac.pspEnabled: `true` if PodSecurityPolicy resources should be created
   pspEnabled: false
 
 # Prometheus URL
-url: http://appmesh-prometheus:9090
+url: http://appmesh-prometheus.appmesh-system.svc.cluster.local:9090

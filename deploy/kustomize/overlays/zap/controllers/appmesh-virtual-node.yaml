@@ -1,0 +1,52 @@
+# # loadtester-virtualnode.yaml
+# apiVersion: appmesh.k8s.aws/v1beta2
+# kind: VirtualNode
+# metadata:
+#   name: loadtester
+#   namespace: zap-demo
+# spec:
+#   podSelector:
+#     matchLabels:
+#       app: loadtester          # <-- lowercase key matches your pods
+#   listeners:
+#     - portMapping:
+#         port: 8080             # loadtester container listens on 8080
+#         protocol: http
+#   serviceDiscovery:
+#     dns:
+#       hostname: loadtester.zap-demo.svc.cluster.local
+#   backends:
+#     - virtualService:
+#         virtualServiceRef:
+#           name: podinfo        # single VS is enough
+#   logging:
+#     accessLog:
+#       file:
+#         path: /dev/stdout
+
+
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualNode
+metadata:
+  name: podinfo-primary
+  namespace: zap-demo
+spec:
+  podSelector:
+    matchLabels: { app: podinfo-primary }
+  listeners:
+  - portMapping: { port: 9898, protocol: http }
+  serviceDiscovery:
+    dns: { hostname: podinfo-primary.zap-demo.svc.cluster.local }
+---
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualNode
+metadata:
+  name: podinfo
+  namespace: zap-demo
+spec:
+  podSelector:
+    matchLabels: { app: podinfo }
+  listeners:
+  - portMapping: { port: 9898, protocol: http }
+  serviceDiscovery:
+    dns: { hostname: podinfo.zap-demo.svc.cluster.local }

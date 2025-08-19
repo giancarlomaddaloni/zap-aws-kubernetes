@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ template "appmesh-grafana.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
 {{ include "appmesh-grafana.labels" . | indent 4 }}
 {{- end }}

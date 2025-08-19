@@ -1,0 +1,19 @@
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: corbie-sa
+  namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::593518286265:role/corbie-eks-sa
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: corbie-sa
+  namespace: default
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::593518286265:role/corbie-eks-sa

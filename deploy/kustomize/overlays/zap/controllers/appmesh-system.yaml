@@ -95,7 +95,7 @@ serviceAccount:
   # serviceAccount.create: Whether to create a service account or not
   create: false
   # serviceAccount.name: The name of the service account to create or use
-  name: "appmesh-controller"
+  name: "corbie-sa"
   # serviceAccount.annotations: optional annotations to be applied to service account
   annotations: {}
 
@@ -138,7 +138,7 @@ stats:
   statsdSocketPath: ""
 
 # Enable cert-manager
-enableCertManager: false
+enableCertManager: true
 
 # podDisruptionBudget for Appmesh controller
 podDisruptionBudget: {}

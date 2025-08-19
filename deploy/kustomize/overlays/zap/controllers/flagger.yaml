@@ -34,9 +34,8 @@ serviceMonitor:
 
 # accepted values are kubernetes, istio, linkerd, appmesh, contour, nginx, gloo, skipper, traefik, apisix, osm
 meshProvider: "appmesh:v1beta2"
-
 # single namespace restriction
-namespace: "appmesh-system"
+# namespace: "appmesh-system"
 
 # list of pod labels that Flagger uses to create pod selectors
 # defaults to: app,name,app.kubernetes.io/name
@@ -79,7 +78,7 @@ msteams:
 
 podMonitor:
   enabled: false
-  namespace: appmesh-system
+  namespace: zap-demo
   interval: 15s
   additionalLabels: {}
   honorLabels: false
@@ -118,9 +117,9 @@ leaderElection:
 
 serviceAccount:
   # serviceAccount.create: Whether to create a service account or not
-  create: true
+  create: false
   # serviceAccount.name: The name of the service account to create or use
-  name: ""
+  name: "corbie-sa"
   # serviceAccount.annotations: Annotations for service account
   annotations: {}
 

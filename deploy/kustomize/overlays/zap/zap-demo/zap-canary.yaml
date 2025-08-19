@@ -1,3 +1,56 @@
+# # apiVersion: flagger.app/v1beta1
+# # kind: Canary
+# # metadata:
+# #   name: podinfo
+# #   namespace: zap-demo
+# # spec:
+# #   provider: kubernetes
+# #   targetRef:
+# #     apiVersion: apps/v1
+# #     kind: Deployment
+# #     name: podinfo
+# #   # the maximum time in seconds for the canary deployment
+# #   # to make progress before it is rollback (default 600s)
+# #   progressDeadlineSeconds: 600
+# #   service:
+# #     port: 9898
+# #     targetPort: http
+# #     portDiscovery: true
+# #   skipAnalysis: false
+# #   analysis:
+# #     # schedule interval (default 60s)
+# #     interval: 30s
+# #     # max number of failed metric checks before rollback
+# #     threshold: 2
+# #     # total number of iterations
+# #     iterations: 2
+# #     webhooks:
+# #     - name: start zap
+# #       type: confirm-rollout
+# #       url: http://loadtester.zap-demo.svc.cluster.local/
+# #       timeout: 3m
+# #       metadata:
+# #         type: bash
+# #         cmd: "r=$RANDOM && kubectl create job -n zap-demo --from=cronjob/zap zap-job-${r} && kubectl wait --for=jsonpath='{.status.ready}'=1 -n zap-demo job/zap-job-${r} --timeout=2m"
+# #     - name: integration test
+# #       type: pre-rollout
+# #       url: http://loadtester.zap-demo.svc.cluster.local/
+# #       metadata:
+# #         cmd: "curl --proxy http://zap:8080 https://zap-podinfo.sec.corbietechnology.com:9898/api/info"
+# #       timeout: 3m
+# #     - name: load test
+# #       url: http://loadtester.zap-demo.svc.cluster.local/
+# #       timeout: 5s
+# #       metadata:
+# #         cmd: "hey -z 1m -q 10 -c 2 https://zap-podinfo.sec.corbietechnology.com:9898/"
+# #     - name: run zap
+# #       type: post-rollout
+# #       url: http://loadtester.zap-demo.svc.cluster.local/
+# #       timeout: 3m
+# #       metadata:
+# #         cmd: "curl http://zap.zap-demo.svc.cluster.local:8080/JSON/automation/action/endDelayJob"
+
+
 # apiVersion: flagger.app/v1beta1
 # kind: Canary
 # metadata:
@@ -27,28 +80,96 @@
 #     webhooks:
 #     - name: start zap
 #       type: confirm-rollout
-#       url: https://zap-loadtester.sec.corbietechnology.com/
+#       url: http://loadtester.zap-demo.svc.cluster.local
 #       timeout: 3m
 #       metadata:
 #         type: bash
 #         cmd: "r=$RANDOM && kubectl create job -n zap-demo --from=cronjob/zap zap-job-${r} && kubectl wait --for=jsonpath='{.status.ready}'=1 -n zap-demo job/zap-job-${r} --timeout=2m"
 #     - name: integration test
 #       type: pre-rollout
-#       url: https://zap-loadtester.sec.corbietechnology.com/
+#       url: http://loadtester.zap-demo.svc.cluster.local
 #       metadata:
-#         cmd: "curl --proxy http://zap:8080 https://zap-podinfo.sec.corbietechnology.com:9898/api/info"
+#         cmd: "curl --proxy https://zap.sec.corbietechnology.com https://zap-podinfo.sec.corbietechnology.com/api/info"
 #       timeout: 3m
 #     - name: load test
-#       url: https://zap-loadtester.sec.corbietechnology.com/
+#       url: http://loadtester.zap-demo.svc.cluster.local
 #       timeout: 5s
 #       metadata:
-#         cmd: "hey -z 1m -q 10 -c 2 https://zap-podinfo.sec.corbietechnology.com:9898/"
+#         cmd: "hey -z 1m -q 10 -c 2 https://zap-podinfo.sec.corbietechnology.com"
 #     - name: run zap
 #       type: post-rollout
-#       url: https://zap-loadtester.sec.corbietechnology.com/
+#       url: http://loadtester.zap-demo.svc.cluster.local
 #       timeout: 3m
 #       metadata:
-#         cmd: "curl http://zap.zap-demo.svc.cluster.local:8080/JSON/automation/action/endDelayJob"
+#         cmd: "curl https://zap.sec.corbietechnology.com/JSON/automation/action/endDelayJob"
+
+
+
+# # apiVersion: flagger.app/v1beta1
+# # kind: Canary
+# # metadata:
+# #   name: podinfo
+# #   namespace: zap-demo
+# # spec:
+# #   provider: kubernetes
+# #   targetRef:
+# #     apiVersion: apps/v1
+# #     kind: Deployment
+# #     name: podinfo
+# #   progressDeadlineSeconds: 600
+# #   service:
+# #     port: 9898
+# #     targetPort: http
+# #     portDiscovery: true
+# #   skipAnalysis: false
+# #   analysis:
+# #     interval: 30s
+# #     threshold: 2
+# #     iterations: 2
+# #     webhooks:
+# #       # Gate (auto-approve). If you want a human gate, wire your own endpoint here.
+# #       - name: start gate
+# #         type: confirm-rollout
+# #         url: http://loadtester.zap-demo.svc.cluster.local/gate/approve
+# #         timeout: 30s
+
+# #       # Start ZAP job before traffic
+# #       - name: start zap job
+# #         type: pre-rollout
+# #         url: http://loadtester.zap-demo.svc.cluster.local/
+# #         timeout: 3m
+# #         metadata:
+# #           type: cmd
+# #           cmd: >
+# #             r=$RANDOM && kubectl create job -n zap-demo --from=cronjob/zap zap-job-${r}
+# #             && kubectl wait --for=condition=complete -n zap-demo job/zap-job-${r} --timeout=12m
+
+# #       # Integration smoke test through the internal ZAP proxy to the internal service
+# #       - name: integration test
+# #         type: pre-rollout
+# #         url: http://loadtester.zap-demo.svc.cluster.local/
+# #         timeout: 3m
+# #         metadata:
+# #           type: cmd
+# #           cmd: "curl --fail --proxy http://zap:8080 http://podinfo.zap-demo.svc.cluster.local:9898/api/info"
+
+# #       # Generate load during analysis (internal URL)
+# #       - name: load test
+# #         type: rollout
+# #         url: http://loadtester.zap-demo.svc.cluster.local/
+# #         timeout: 10s
+# #         metadata:
+# #           type: cmd
+# #           cmd: "hey -z 1m -q 10 -c 2 http://podinfo.zap-demo.svc.cluster.local:9898/"
+
+# #       # End any ZAP delay step after rollout
+# #       - name: end zap delay
+# #         type: post-rollout
+# #         url: http://loadtester.zap-demo.svc.cluster.local/
+# #         timeout: 30s
+# #         metadata:
+# #           type: cmd
+# #           cmd: "curl --fail http://zap:8080/JSON/automation/action/endDelayJob"
 
 
 apiVersion: flagger.app/v1beta1
@@ -56,117 +177,116 @@ kind: Canary
 metadata:
   name: podinfo
   namespace: zap-demo
+  annotations:
+    # Enable Envoy access logging to stdout for easier debugging in App Mesh
+    appmesh.flagger.app/accesslog: enabled
 spec:
-  provider: kubernetes
+  # Use App Mesh provider (you’re running App Mesh)
+  provider: appmesh:v1beta2
+
+  # The workload Flagger will manage
   targetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: podinfo
-  # the maximum time in seconds for the canary deployment
-  # to make progress before it is rollback (default 600s)
-  progressDeadlineSeconds: 600
+
+  # Give the rollout time to make progress before rollback
+  progressDeadlineSeconds: 300
+
+  (Optional) Reference your HPA if you have one named "podinfo"
+  autoscalerRef:
+    apiVersion: autoscaling/v2
+    kind: HorizontalPodAutoscaler
+    name: podinfo
+
+  # App Mesh service settings used by Flagger
   service:
     port: 9898
-    targetPort: http
-    portDiscovery: true
-  skipAnalysis: false
+    timeout: 15s
+    retries:
+      attempts: 3
+      perTryTimeout: 5s
+      retryOn: "gateway-error,client-error,stream-error"
+    match:
+      - uri:
+          prefix: /
+    rewrite:
+      uri: /
+
   analysis:
-    # schedule interval (default 60s)
-    interval: 30s
-    # max number of failed metric checks before rollback
-    threshold: 2
-    # total number of iterations
-    iterations: 2
+    # How often Flagger checks metrics / webhooks
+    interval: 1m
+    # Max failed metric checks before rollback
+    threshold: 5
+    # Traffic ramp (0–100)
+    maxWeight: 50
+    stepWeight: 5
+
+    # Prometheus KPIs (assumes your default Prometheus integration in Flagger)
+    metrics:
+      - name: request-success-rate
+        thresholdRange:
+          min: 99
+        interval: 1m
+      - name: request-duration
+        thresholdRange:
+          max: 500   # ms, p99
+        interval: 30s
+
+    # Webhooks run around the rollout
     webhooks:
-    - name: start zap
-      type: confirm-rollout
-      url: https://zap-loadtester.sec.corbietechnology.com
-      timeout: 3m
-      metadata:
-        type: bash
-        cmd: "r=$RANDOM && kubectl create job -n zap-demo --from=cronjob/zap zap-job-${r} && kubectl wait --for=jsonpath='{.status.ready}'=1 -n zap-demo job/zap-job-${r} --timeout=2m"
-    - name: integration test
-      type: pre-rollout
-      url: https://zap-loadtester.sec.corbietechnology.com
-      metadata:
-        cmd: "curl --proxy https://zap.sec.corbietechnology.com https://zap-podinfo.sec.corbietechnology.com/api/info"
-      timeout: 3m
-    - name: load test
-      url: https://zap-loadtester.sec.corbietechnology.com
-      timeout: 5s
-      metadata:
-        cmd: "hey -z 1m -q 10 -c 2 https://zap-podinfo.sec.corbietechnology.com"
-    - name: run zap
-      type: post-rollout
-      url: https://zap-loadtester.sec.corbietechnology.com
-      timeout: 3m
-      metadata:
-        cmd: "curl https://zap.sec.corbietechnology.com/JSON/automation/action/endDelayJob"
 
+      # Optional: human/automatic gate to start rollout
+      - name: start gate
+        type: confirm-rollout
+        url: https://zap-loadtester.sec.corbietechnology.com/gate/approve
+        timeout: 30s
 
+      # Spin up a ZAP job (from your CronJob) before shifting traffic
+      - name: start zap job
+        type: pre-rollout
+        url: https://zap-loadtester.sec.corbietechnology.com
+        timeout: 3m
+        metadata:
+          type: cmd
+          cmd: >
+            r=$RANDOM &&
+            kubectl create job -n zap-demo --from=cronjob/zap zap-job-${r} &&
+            kubectl wait --for=condition=complete -n zap-demo job/zap-job-${r} --timeout=12m
 
-# apiVersion: flagger.app/v1beta1
-# kind: Canary
-# metadata:
-#   name: podinfo
-#   namespace: zap-demo
-# spec:
-#   provider: kubernetes
-#   targetRef:
-#     apiVersion: apps/v1
-#     kind: Deployment
-#     name: podinfo
-#   progressDeadlineSeconds: 600
-#   service:
-#     port: 9898
-#     targetPort: http
-#     portDiscovery: true
-#   skipAnalysis: false
-#   analysis:
-#     interval: 30s
-#     threshold: 2
-#     iterations: 2
-#     webhooks:
-#       # Gate (auto-approve). If you want a human gate, wire your own endpoint here.
-#       - name: start gate
-#         type: confirm-rollout
-#         url: http://loadtester.zap-demo.svc.cluster.local/gate/approve
-#         timeout: 30s
+      # Internal smoke test through the internal ZAP proxy to the internal service
+      - name: integration test (internal via zap)
+        type: pre-rollout
+        url: https://zap-loadtester.sec.corbietechnology.com
+        timeout: 3m
+        metadata:
+          type: cmd
+          cmd: "curl --fail --proxy http://zap.zap-demo.svc.cluster.local:8080 https://zap-podinfo.sec.corbietechnology.com/api/info"
 
-#       # Start ZAP job before traffic
-#       - name: start zap job
-#         type: pre-rollout
-#         url: http://loadtester.zap-demo.svc.cluster.local/
-#         timeout: 3m
-#         metadata:
-#           type: cmd
-#           cmd: >
-#             r=$RANDOM && kubectl create job -n zap-demo --from=cronjob/zap zap-job-${r}
-#             && kubectl wait --for=condition=complete -n zap-demo job/zap-job-${r} --timeout=12m
+      # Generate load during analysis (internal path)
+      - name: load test (internal)
+        type: rollout
+        url: https://zap-loadtester.sec.corbietechnology.com
+        timeout: 15s
+        metadata:
+          type: cmd
+          cmd: "hey -z 1m -q 10 -c 2  https://zap-podinfo.sec.corbietechnology.com"
 
-#       # Integration smoke test through the internal ZAP proxy to the internal service
-#       - name: integration test
-#         type: pre-rollout
-#         url: http://loadtester.zap-demo.svc.cluster.local/
-#         timeout: 3m
-#         metadata:
-#           type: cmd
-#           cmd: "curl --fail --proxy http://zap:8080 http://podinfo.zap-demo.svc.cluster.local:9898/api/info"
+      # Optional: edge smoke test through your ALB/TLS once internal checks pass
+      # (keep this if you explicitly want to validate the external path)
+      - name: edge smoke test (external via ALB)
+        type: rollout
+        url: https://zap-loadtester.sec.corbietechnology.com
+        timeout: 30s
+        metadata:
+          type: cmd
+          cmd: "curl --fail https://zap-podinfo.sec.corbietechnology.com/api/info"
 
-#       # Generate load during analysis (internal URL)
-#       - name: load test
-#         type: rollout
-#         url: http://loadtester.zap-demo.svc.cluster.local/
-#         timeout: 10s
-#         metadata:
-#           type: cmd
-#           cmd: "hey -z 1m -q 10 -c 2 http://podinfo.zap-demo.svc.cluster.local:9898/"
-
-#       # End any ZAP delay step after rollout
-#       - name: end zap delay
-#         type: post-rollout
-#         url: http://loadtester.zap-demo.svc.cluster.local/
-#         timeout: 30s
-#         metadata:
-#           type: cmd
-#           cmd: "curl --fail http://zap:8080/JSON/automation/action/endDelayJob"
+      # End any ZAP delay/automation job using the **internal service URL**
+      - name: end zap delay
+        type: post-rollout
+        url: https://zap-loadtester.sec.corbietechnology.com
+        timeout: 30s
+        metadata:
+          type: cmd
+          cmd: "curl --fail http://zap.zap-demo.svc.cluster.local:8080/JSON/automation/action/endDelayJob"

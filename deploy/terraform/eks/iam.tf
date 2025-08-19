@@ -1,16 +1,10 @@
-module "disabled" {
-  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-
-  role_name   = "disabled"
-  create_role = false
-}
 
 module "corbie_eks_role" {
-  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  allow_self_assume_role = true
+  source    = "../modules/iam-role-for-service-accounts"
+  # allow_self_assume_role = true
 
 
-  role_name = "${local.project_name}-eks-sa"
+  name = "${local.project_name}-eks-sa"
 
   oidc_providers = {
     default = {
@@ -19,41 +13,75 @@ module "corbie_eks_role" {
     }
   }
 
-  role_policy_arns = {
+  policies = {
     AmazonEKS_CNI_Policy = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-    additional           = aws_iam_policy.additional.arn
+    corbie_s3_sa         = aws_iam_policy.corbie_s3_sa.arn
+    corbie_ecr_sa        = aws_iam_policy.corbie_ecr_sa.arn
     ssmInstance          = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
 
   depends_on = [module.corbie_eks] 
 }
 
-module "corbie_sa_role" {
-  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  allow_self_assume_role = true
+module "corbie_sa_role_zap" {
+  source    = "../modules/iam-role-for-service-accounts"
+  # allow_self_assume_role = true
 
 
-  role_name = "${local.project_name}-sa"
+  name = "${local.project_name}-zap-sa"
 
   oidc_providers = {
     default = {
       provider_arn               = module.corbie_eks.oidc_provider_arn
-      namespace_service_accounts = ["default:kube-system", "default:corbie-sa", "corbie:corbie-sa"]
+      namespace_service_accounts = ["default:corbie-sa", "kube-system:corbie-sa", "corbie:corbie-sa", "zap-demo:corbie-sa", "appmesh-system:corbie-sa"]
     }
   }
 
-  role_policy_arns = {
-    corbie_sa           = aws_iam_policy.corbie_sa.arn
+
+  policies = {
+    corbie_s3_sa           = aws_iam_policy.corbie_s3_sa.arn
+    corbie_ecr_sa          = aws_iam_policy.corbie_ecr_sa.arn
   }
 
   depends_on = [module.corbie_eks] 
 
 }
 
+module "corbie_sa_role_ptest" {
+  source    = "../modules/iam-role-for-service-accounts"
+  # allow_self_assume_role = true
 
-resource "aws_iam_policy" "corbie_sa" {
-  name        = "${local.project_name}_eks_sa"
-  description = "Additional test policy"
+
+  name = "${local.project_name}-zap-sa"
+
+  oidc_providers = {
+    default = {
+      provider_arn               = module.corbie_eks.oidc_provider_arn
+      namespace_service_accounts = [
+        "default:corbie-sa", 
+        "kube-system:corbie-sa", 
+        "corbie:corbie-ptest-sa", 
+        "appmesh-system:corbie-ptest-sa", 
+        "testkube:agent-sa-testkube-runner", 
+        "testkube:exec-sa-testkube-runner"
+      ]
+    }
+  }
+
+  policies = {
+    corbie_s3_sa           = aws_iam_policy.corbie_s3_sa.arn
+    corbie_ecr_sa          = aws_iam_policy.corbie_ecr_sa.arn
+  }
+
+
+  depends_on = [module.corbie_eks] 
+
+}
+
+
+resource "aws_iam_policy" "corbie_s3_sa" {
+  name        = "${local.project_name}_eks_s3_policy_sa"
+  description = "S3 Full Access Policy"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -70,9 +98,9 @@ resource "aws_iam_policy" "corbie_sa" {
 }
 
 
-resource "aws_iam_policy" "additional" {
-  name        = "${local.project_name}_eks_main_role_policy"
-  description = "Additional test policy"
+resource "aws_iam_policy" "corbie_ecr_sa" {
+  name        = "${local.project_name}_eks_ecr_policy_sa"
+  description = "ECR Access Policy"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -127,10 +155,11 @@ resource "aws_iam_policy" "additional" {
 
 
 module "corbie_lb_role" {
-  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  source    = "../modules/iam-role-for-service-accounts"
 
-  role_name                              = "${local.project_name}-lb-sa"
+  name                                   = "${local.project_name}-lb-sa"
   attach_load_balancer_controller_policy = true
+  
 
   oidc_providers = {
     ex = {
@@ -141,16 +170,17 @@ module "corbie_lb_role" {
 }
 
 
-module "corbie_efs_role" {
-  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
 
-  role_name                              = "${local.project_name}-efs-sa"
-  attach_efs_csi_policy = true
+module "corbie_efs_role" {
+  source    = "../modules/iam-role-for-service-accounts"
+
+  name                              = "${local.project_name}-efs-sa"
+  attach_efs_csi_policy             = true
 
   oidc_providers = {
     ex = {
       provider_arn               = module.corbie_eks.oidc_provider_arn
-      namespace_service_accounts = ["kube-system:efs-sa", "kube-system:efs-csi-controller-sa", "zap-demo:efs-csi-controller-sa", "kube-system:efs-csi-node-sa"]
+      namespace_service_accounts = ["kube-system:efs-sa", "kube-system:efs-csi-controller-sa", "zap-demo:efs-csi-controller-sa", "kube-system:efs-csi-node-sa", "appmesh-system:efs-csi-controller-sa","testkube:efs-csi-controller-sa"]
     }
   }
 }

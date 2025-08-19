@@ -3,6 +3,7 @@ apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: {{ template "appmesh-grafana.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
 {{ include "appmesh-grafana.labels" . | indent 4 }}
   annotations:

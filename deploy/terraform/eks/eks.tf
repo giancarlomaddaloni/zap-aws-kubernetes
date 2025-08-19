@@ -23,7 +23,7 @@ module "corbie_eks" {
   access_entries = {
     federated_giancarlo_maddaloni = {
       kubernetes_groups = [] 
-      principal_arn     = "arn:aws:sts::1xxxxxxxxxxxxx:federated-user/GiancarloMaddaloni"
+      principal_arn     = "arn:aws:sts::593518286265:federated-user/GiancarloMaddaloni"
       policy_associations = {
         namespace = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
@@ -42,7 +42,7 @@ module "corbie_eks" {
     },
     federated_rodrigo_espinoza = {
       kubernetes_groups = [] 
-      principal_arn     = "arn:aws:sts::1xxxxxxxxxxxxx:federated-user/RodrigoEspinoza"
+      principal_arn     = "arn:aws:sts::593518286265:federated-user/RodrigoEspinoza"
       policy_associations = {
         namespace = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
@@ -61,7 +61,7 @@ module "corbie_eks" {
     },
     federated_terraform_deploy = {
       kubernetes_groups = [] 
-      principal_arn     = "arn:aws:sts::1xxxxxxxxxxxxx:federated-user/terraform-deploy"
+      principal_arn     = "arn:aws:sts::593518286265:federated-user/terraform-deploy"
       policy_associations = {
         namespace = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
@@ -80,7 +80,7 @@ module "corbie_eks" {
     },
     giancarlo_maddaloni = {
       kubernetes_groups = [] 
-      principal_arn     = "arn:aws:iam::1xxxxxxxxxxxxx:user/GiancarloMaddaloni"
+      principal_arn     = "arn:aws:iam::593518286265:user/GiancarloMaddaloni"
       policy_associations = {
         namespace = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
@@ -99,7 +99,7 @@ module "corbie_eks" {
     },
     rodrigo_espinoza = {
       kubernetes_groups = [] 
-      principal_arn     = "arn:aws:iam::1xxxxxxxxxxxxx:user/RodrigoEspinoza"
+      principal_arn     = "arn:aws:iam::593518286265:user/RodrigoEspinoza"
       policy_associations = {
         namespace = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
@@ -129,17 +129,16 @@ resource "aws_eks_addon" "coredns" {
   
   depends_on = [
     module.corbie_eks,
-    module.corbie_node_group
   ]
 }
 
 
 
-module "corbie_node_group" {
+module "corbie_zap_node_group" {
   source = "terraform-aws-modules/eks/aws//modules/eks-managed-node-group"
   version = "20.13.1"
 
-  name            = local.k8s_parameters.node_group_name
+  name            = "${local.k8s_parameters.node_group_name}_zap"
   cluster_name    = local.k8s_parameters.cluster_name
   
   cluster_version = local.k8s_parameters.version
@@ -147,9 +146,9 @@ module "corbie_node_group" {
   subnet_ids   = data.aws_subnets.private.ids
   create_iam_role = false
 
-  min_size     = local.k8s_parameters.min_size
-  max_size     = local.k8s_parameters.max_size
-  desired_size = local.k8s_parameters.desired_size
+  min_size     = local.k8s_parameters.zap_min_size
+  max_size     = local.k8s_parameters.zap_max_size
+  desired_size = local.k8s_parameters.zap_desired_size
 
   iam_role_arn = aws_iam_role.corbie_eks_node_role.arn
 
@@ -160,9 +159,51 @@ module "corbie_node_group" {
   launch_template_tags   = data.aws_default_tags.corbie.tags
   vpc_security_group_ids = [module.cluster_sg.security_group_id]
 
-  labels = {
-    "application" : "corbie"
-  }
+  taints = [        
+    {
+    key    = "workload"
+    value  = "zap"
+    effect = "NO_SCHEDULE"
+    }]
+
+  depends_on = [
+    module.corbie_eks
+  ]
+  
+}
+
+module "corbie_ptest_node_group" {
+  source = "terraform-aws-modules/eks/aws//modules/eks-managed-node-group"
+  version = "20.13.1"
+
+  name            = "${local.k8s_parameters.node_group_name}_ptest"
+  cluster_name    = local.k8s_parameters.cluster_name
+  
+  cluster_version = local.k8s_parameters.version
+
+  subnet_ids   = data.aws_subnets.private.ids
+  create_iam_role = false
+
+  taints = [      
+    {
+    key    = "workload"
+    value  = "ptest"
+    effect = "NO_SCHEDULE"
+    }]
+
+  min_size     = local.k8s_parameters.ptest_min_size
+  max_size     = local.k8s_parameters.ptest_max_size
+  desired_size = local.k8s_parameters.ptest_desired_size
+
+  iam_role_arn = aws_iam_role.corbie_eks_node_role.arn
+
+  instance_types       = local.k8s_parameters.instance_types
+  capacity_type        = local.k8s_parameters.capacity_type
+  cluster_service_cidr = local.k8s_parameters.cluster_service_cidr
+
+  launch_template_tags   = data.aws_default_tags.corbie.tags
+  vpc_security_group_ids = [module.cluster_sg.security_group_id]
+
 
   depends_on = [
     module.corbie_eks

@@ -5,7 +5,10 @@ kind: Kustomization
 resources: 
   - ../../../base/controllers/
   - loadtester-sa.yaml
-  - prometheus-ingress.yaml
+  - appmesh-ingress.yaml
+  - appmesh-global.yaml
+  - appmesh-virtual-gateway.yaml
+  - appmesh-virtual-node.yaml
 
 generatorOptions:
  disableNameSuffixHash: true
@@ -67,8 +70,15 @@ helmCharts:
   version: 1.41.0
 
 - name: appmesh-grafana
-  releaseName: appmesh-grafana
+  releaseName: appmesh-grafanac
   namespace: appmesh-system
   valuesFile:  ./appmesh-grafana.yaml
   includeCRDs: false
-  version: 1.41.0
+  version: 6.4.3
+
+- name: appmesh-gateway
+  releaseName: appmesh-gateway
+  namespace: appmesh-system
+  valuesFile:  ./appmesh-gateway.yaml
+  includeCRDs: false
+  version: 1.0.0

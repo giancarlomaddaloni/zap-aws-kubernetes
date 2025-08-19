@@ -28,8 +28,13 @@ locals {
     "xray/aws-xray-daemon",
     "prom/prometheus",
     "fluxcd/flagger",
-    "grafana/grafana"
+    "grafana/grafana",
+    "kubeshop/testkube-api-server",
+    "kubeshop/testkube-tw-toolkit",
+    "kubeshop/testkube-tw-init"
   ]
+
+
 
 
   k8s_parameters = {

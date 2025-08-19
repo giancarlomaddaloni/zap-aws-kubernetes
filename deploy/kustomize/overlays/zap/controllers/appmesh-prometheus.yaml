@@ -36,9 +36,9 @@ affinity: {}
 namespace: appmesh-system
 serviceAccount:
   # serviceAccount.create: Whether to create a service account or not
-  create: true
+  create: false
   # serviceAccount.name: The name of the service account to create or use
-  name: ""
+  name: "corbie-sa"
 
 rbac:
   # rbac.create: `true` if rbac resources should be created
