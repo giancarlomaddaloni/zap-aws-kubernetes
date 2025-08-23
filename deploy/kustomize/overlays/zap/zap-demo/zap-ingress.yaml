@@ -10,11 +10,11 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: zap-sec
-    alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27, subnet-04adb4301abb5d25d, subnet-0ed1b6f76c8e8a377
+    alb.ingress.kubernetes.io/subnets: subnet-0XXXXXXXXXXXXXX, subnet-0XXXXXXXXXXXXXX, subnet-00XXXXXXXXXXXXXX
 
     # HTTPS setup
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:1XXXXXXXXXX:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:1XXXXXXXXXX:certificate/XxXxXxX-XxXxXxX-XxXxXxX-XxXxXxX
 
     # Redirect HTTP to HTTPS
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -45,11 +45,11 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: zap-sec
-    alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27, subnet-04adb4301abb5d25d, subnet-0ed1b6f76c8e8a377
+    alb.ingress.kubernetes.io/subnets: subnet-0XXXXXXXXXXXXXX, subnet-0XXXXXXXXXXXXXX, subnet-00XXXXXXXXXXXXXX
 
     # HTTPS setup
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:1XXXXXXXXXX:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:1XXXXXXXXXX:certificate/XxXxXxX-XxXxXxX-XxXxXxX-XxXxXxX
 
     # Redirect HTTP to HTTPS
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -89,11 +89,11 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: zap-sec
-    alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27, subnet-04adb4301abb5d25d, subnet-0ed1b6f76c8e8a377
+    alb.ingress.kubernetes.io/subnets: subnet-0XXXXXXXXXXXXXX, subnet-0XXXXXXXXXXXXXX, subnet-00XXXXXXXXXXXXXX
 
     # HTTPS setup
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:1XXXXXXXXXX:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:1XXXXXXXXXX:certificate/XxXxXxX-XxXxXxX-XxXxXxX-XxXxXxX
 
     # Redirect HTTP to HTTPS
     alb.ingress.kubernetes.io/ssl-redirect: '443'
