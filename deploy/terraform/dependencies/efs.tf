@@ -1,4 +1,4 @@
-module "corbie_efs" {
+module "zap_efs" {
 
   source  = "terraform-aws-modules/efs/aws"
   version = "1.8.0"
@@ -19,28 +19,28 @@ module "corbie_efs" {
   # Mount targets / security group
   mount_targets = {
     "us-east-1a" = {
-      subnet_id = module.corbie_vpc.private_subnets[0]
+      subnet_id = module.zap_vpc.private_subnets[0]
     }
     "us-east-1b" = {
-      subnet_id = module.corbie_vpc.private_subnets[1]
+      subnet_id = module.zap_vpc.private_subnets[1]
     }
     "us-east-1c" = {
-      subnet_id = module.corbie_vpc.private_subnets[2]
+      subnet_id = module.zap_vpc.private_subnets[2]
     }
   }
-  security_group_description = "EFS corbie SG"
-  security_group_vpc_id      = module.corbie_vpc.vpc_id
+  security_group_description = "EFS zap SG"
+  security_group_vpc_id      = module.zap_vpc.vpc_id
   security_group_name        = "${local.project_name}-efs-sg"
   security_group_rules = {
     vpc = {
-      description = "NFS ingress from VPC private subnets for corbie"
+      description = "NFS ingress from VPC private subnets for zap"
       cidr_blocks = ["${local.vpc_cidr}"]
     }
   }
 
   # Access point(s)
   access_points = {
-    corbie_zap = {
+    zap_zap = {
       root_directory = {
         path = "/zap"
         creation_info = {

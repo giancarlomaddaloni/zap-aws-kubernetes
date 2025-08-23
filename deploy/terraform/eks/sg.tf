@@ -1,7 +1,7 @@
 module "cluster_sg" {
   source      = "terraform-aws-modules/security-group/aws"
   name        = "${local.project_name}-cluster-sg"
-  vpc_id      = data.aws_vpc.corbie.id
+  vpc_id      = data.aws_vpc.zap.id
   # ingress
   ingress_with_cidr_blocks = [
     {
@@ -33,7 +33,7 @@ module "alb_sg" {
 
   source      = "terraform-aws-modules/security-group/aws"
   name        = "${local.project_name}-alb-sg"
-  vpc_id      = data.aws_vpc.corbie.id
+  vpc_id      = data.aws_vpc.zap.id
 
 
   # ingress

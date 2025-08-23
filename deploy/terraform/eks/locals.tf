@@ -1,8 +1,8 @@
 locals {
-  project_name   = "corbie"
+  project_name   = "zap"
   region         = "us-east-1"
   vpc_cidr       = "10.0.0.0/16"
-  vpc_name       = "corbie-vpc"
+  vpc_name       = "zap-vpc"
 
 
   k8s_parameters = {

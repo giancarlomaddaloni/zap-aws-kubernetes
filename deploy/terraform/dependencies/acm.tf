@@ -5,5 +5,5 @@ module "acm" {
   domain_name = "*.sec.${local.domain_name}"
   validate_certificate = true
   validation_method = "DNS"
-  zone_id = data.aws_route53_zone.corbie.zone_id
+  zone_id = data.aws_route53_zone.zap.zone_id
 }

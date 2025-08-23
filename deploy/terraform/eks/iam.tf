@@ -1,5 +1,5 @@
 
-module "corbie_eks_role" {
+module "zap_eks_role" {
   source    = "../modules/iam-role-for-service-accounts"
   # allow_self_assume_role = true
 
@@ -8,22 +8,22 @@ module "corbie_eks_role" {
 
   oidc_providers = {
     default = {
-      provider_arn               = module.corbie_eks.oidc_provider_arn
-      namespace_service_accounts = ["default:kube-system", "default:corbie-sa", "corbie:corbie-sa"]
+      provider_arn               = module.zap_eks.oidc_provider_arn
+      namespace_service_accounts = ["default:kube-system", "default:zap-sa", "zap:zap-sa"]
     }
   }
 
   policies = {
     AmazonEKS_CNI_Policy = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-    corbie_s3_sa         = aws_iam_policy.corbie_s3_sa.arn
-    corbie_ecr_sa        = aws_iam_policy.corbie_ecr_sa.arn
+    zap_s3_sa         = aws_iam_policy.zap_s3_sa.arn
+    zap_ecr_sa        = aws_iam_policy.zap_ecr_sa.arn
     ssmInstance          = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
 
-  depends_on = [module.corbie_eks] 
+  depends_on = [module.zap_eks] 
 }
 
-module "corbie_sa_role_zap" {
+module "zap_sa_role_zap" {
   source    = "../modules/iam-role-for-service-accounts"
   # allow_self_assume_role = true
 
@@ -32,22 +32,22 @@ module "corbie_sa_role_zap" {
 
   oidc_providers = {
     default = {
-      provider_arn               = module.corbie_eks.oidc_provider_arn
-      namespace_service_accounts = ["default:corbie-sa", "kube-system:corbie-sa", "corbie:corbie-sa", "zap-demo:corbie-sa", "appmesh-system:corbie-sa"]
+      provider_arn               = module.zap_eks.oidc_provider_arn
+      namespace_service_accounts = ["default:zap-sa", "kube-system:zap-sa", "zap:zap-sa", "zap-demo:zap-sa", "appmesh-system:zap-sa"]
     }
   }
 
 
   policies = {
-    corbie_s3_sa           = aws_iam_policy.corbie_s3_sa.arn
-    corbie_ecr_sa          = aws_iam_policy.corbie_ecr_sa.arn
+    zap_s3_sa           = aws_iam_policy.zap_s3_sa.arn
+    zap_ecr_sa          = aws_iam_policy.zap_ecr_sa.arn
   }
 
-  depends_on = [module.corbie_eks] 
+  depends_on = [module.zap_eks] 
 
 }
 
-module "corbie_sa_role_ptest" {
+module "zap_sa_role_ptest" {
   source    = "../modules/iam-role-for-service-accounts"
   # allow_self_assume_role = true
 
@@ -56,12 +56,12 @@ module "corbie_sa_role_ptest" {
 
   oidc_providers = {
     default = {
-      provider_arn               = module.corbie_eks.oidc_provider_arn
+      provider_arn               = module.zap_eks.oidc_provider_arn
       namespace_service_accounts = [
-        "default:corbie-sa", 
-        "kube-system:corbie-sa", 
-        "corbie:corbie-ptest-sa", 
-        "appmesh-system:corbie-ptest-sa", 
+        "default:zap-sa", 
+        "kube-system:zap-sa", 
+        "zap:zap-ptest-sa", 
+        "appmesh-system:zap-ptest-sa", 
         "testkube:agent-sa-testkube-runner", 
         "testkube:exec-sa-testkube-runner"
       ]
@@ -69,17 +69,17 @@ module "corbie_sa_role_ptest" {
   }
 
   policies = {
-    corbie_s3_sa           = aws_iam_policy.corbie_s3_sa.arn
-    corbie_ecr_sa          = aws_iam_policy.corbie_ecr_sa.arn
+    zap_s3_sa           = aws_iam_policy.zap_s3_sa.arn
+    zap_ecr_sa          = aws_iam_policy.zap_ecr_sa.arn
   }
 
 
-  depends_on = [module.corbie_eks] 
+  depends_on = [module.zap_eks] 
 
 }
 
 
-resource "aws_iam_policy" "corbie_s3_sa" {
+resource "aws_iam_policy" "zap_s3_sa" {
   name        = "${local.project_name}_eks_s3_policy_sa"
   description = "S3 Full Access Policy"
 
@@ -98,7 +98,7 @@ resource "aws_iam_policy" "corbie_s3_sa" {
 }
 
 
-resource "aws_iam_policy" "corbie_ecr_sa" {
+resource "aws_iam_policy" "zap_ecr_sa" {
   name        = "${local.project_name}_eks_ecr_policy_sa"
   description = "ECR Access Policy"
 
@@ -154,7 +154,7 @@ resource "aws_iam_policy" "corbie_ecr_sa" {
 ################################################################################
 
 
-module "corbie_lb_role" {
+module "zap_lb_role" {
   source    = "../modules/iam-role-for-service-accounts"
 
   name                                   = "${local.project_name}-lb-sa"
@@ -163,7 +163,7 @@ module "corbie_lb_role" {
 
   oidc_providers = {
     ex = {
-      provider_arn               = module.corbie_eks.oidc_provider_arn
+      provider_arn               = module.zap_eks.oidc_provider_arn
       namespace_service_accounts = ["kube-system:aws-load-balancer-controller"]
     }
   }
@@ -171,7 +171,7 @@ module "corbie_lb_role" {
 
 
 
-module "corbie_efs_role" {
+module "zap_efs_role" {
   source    = "../modules/iam-role-for-service-accounts"
 
   name                              = "${local.project_name}-efs-sa"
@@ -179,7 +179,7 @@ module "corbie_efs_role" {
 
   oidc_providers = {
     ex = {
-      provider_arn               = module.corbie_eks.oidc_provider_arn
+      provider_arn               = module.zap_eks.oidc_provider_arn
       namespace_service_accounts = ["kube-system:efs-sa", "kube-system:efs-csi-controller-sa", "zap-demo:efs-csi-controller-sa", "kube-system:efs-csi-node-sa", "appmesh-system:efs-csi-controller-sa","testkube:efs-csi-controller-sa"]
     }
   }
@@ -190,7 +190,7 @@ module "corbie_efs_role" {
 ################################################################################
 
 
-resource "aws_iam_role" "corbie_eks_node_role" {
+resource "aws_iam_role" "zap_eks_node_role" {
   name = local.k8s_parameters.iam_role_name
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -205,20 +205,20 @@ resource "aws_iam_role" "corbie_eks_node_role" {
 
 resource "aws_iam_role_policy_attachment" "node_eks_worker" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.corbie_eks_node_role.name
+  role       = aws_iam_role.zap_eks_node_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "node_ecr_readonly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.corbie_eks_node_role.name
+  role       = aws_iam_role.zap_eks_node_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "node_cni" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.corbie_eks_node_role.name
+  role       = aws_iam_role.zap_eks_node_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "node_ssm" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  role       = aws_iam_role.corbie_eks_node_role.name
+  role       = aws_iam_role.zap_eks_node_role.name
 }

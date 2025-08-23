@@ -1,4 +1,4 @@
-module "corbie_ecr" {
+module "zap_ecr" {
   for_each = toset(local.repositories)
   repository_name     = "${each.value}"
   source  = "terraform-aws-modules/ecr/aws"

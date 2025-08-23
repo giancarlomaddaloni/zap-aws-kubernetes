@@ -95,26 +95,26 @@ deployment:
 
 images:
   agent:
-    registry: docker.io
+    registry: 593518286265.dkr.ecr.us-east-1.amazonaws.com
     repository: kubeshop/testkube-api-server
     pullPolicy: IfNotPresent
     ## Overrides the image tag whose default is the chart appVersion.
-    # tag: "2.1.147"
+    tag: "2.1.147"
     digest: ""
     pullSecrets: []
 
   toolkit:
-    registry: docker.io
+    registry: 593518286265.dkr.ecr.us-east-1.amazonaws.com
     repository: kubeshop/testkube-tw-toolkit
     ## Overrides the image tag whose default is the api-server version.
-    # tag: "2.1.147"
+    tag: "2.1.147"
     digest: ""
 
   init:
-    registry: docker.io
+    registry: 593518286265.dkr.ecr.us-east-1.amazonaws.com
     repository: kubeshop/testkube-tw-init
     ## Overrides the image tag whose default is the api-server version.
-    # tag: "2.1.147"
+    tag: "2.1.147"
     digest: ""
 
 ## Persistent cache for Docker

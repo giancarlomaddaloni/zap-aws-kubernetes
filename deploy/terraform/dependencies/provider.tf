@@ -3,7 +3,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Application  = "corbie"
+      Application  = "zap"
       IaCTool      = "github-actions"
       DeployedBy   = "gmaddaloni"
       Repository   = "https://github.com/giancarlomaddaloni/zap-aws-kubernetes"

@@ -1,22 +1,22 @@
 locals {
 
-  project_name   = "corbie"
+  project_name   = "zap"
   region         = "us-east-1"
   vpc_cidr       = "10.0.0.0/16"
-  vpc_name       = "corbie-vpc"
+  vpc_name       = "zap-vpc"
   azs            = slice(data.aws_availability_zones.available.names, 0, 3)
 
 
-  hosted_zone    = "corbietechnology.com"
-  domain_name    = "corbietechnology.com"
+  hosted_zone    = "zaptechnology.com"
+  domain_name    = "zaptechnology.com"
 
   repositories = [
-    "corbie-lb-eks",
-    "corbie-cert-manager/startupapicheck",
-    "corbie-cert-manager/acmesolver",
-    "corbie-cert-manager/cainjector",
-    "corbie-cert-manager/controller",
-    "corbie-cert-manager/webhook",
+    "zap-lb-eks",
+    "zap-cert-manager/startupapicheck",
+    "zap-cert-manager/acmesolver",
+    "zap-cert-manager/cainjector",
+    "zap-cert-manager/controller",
+    "zap-cert-manager/webhook",
     "stefanprodan/podinfo",
     "zaproxy/zaproxy",
     "fluxcd/flagger-loadtester",
