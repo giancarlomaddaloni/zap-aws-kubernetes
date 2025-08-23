@@ -28,7 +28,7 @@ spec:
             - api.addrs.addr.name=.*
             - -config
             - api.addrs.addr.regex=true
-            image: 593518286265.dkr.ecr.us-east-1.amazonaws.com/zaproxy/zaproxy:latest
+            image: 1XXXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com/zaproxy/zaproxy:latest
             name: zaproxy
             ports:
             - containerPort: 8080

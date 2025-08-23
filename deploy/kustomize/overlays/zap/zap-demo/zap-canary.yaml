@@ -36,13 +36,13 @@
 # #       type: pre-rollout
 # #       url: http://loadtester.zap-demo.svc.cluster.local/
 # #       metadata:
-# #         cmd: "curl --proxy http://zap:8080 https://zap-podinfo.sec.corbietechnology.com:9898/api/info"
+# #         cmd: "curl --proxy http://zap:8080 https://zap-podinfo.sec.zaptechnology.com:9898/api/info"
 # #       timeout: 3m
 # #     - name: load test
 # #       url: http://loadtester.zap-demo.svc.cluster.local/
 # #       timeout: 5s
 # #       metadata:
-# #         cmd: "hey -z 1m -q 10 -c 2 https://zap-podinfo.sec.corbietechnology.com:9898/"
+# #         cmd: "hey -z 1m -q 10 -c 2 https://zap-podinfo.sec.zaptechnology.com:9898/"
 # #     - name: run zap
 # #       type: post-rollout
 # #       url: http://loadtester.zap-demo.svc.cluster.local/
@@ -89,19 +89,19 @@
 #       type: pre-rollout
 #       url: http://loadtester.zap-demo.svc.cluster.local
 #       metadata:
-#         cmd: "curl --proxy https://zap.sec.corbietechnology.com https://zap-podinfo.sec.corbietechnology.com/api/info"
+#         cmd: "curl --proxy https://zap.sec.zaptechnology.com https://zap-podinfo.sec.zaptechnology.com/api/info"
 #       timeout: 3m
 #     - name: load test
 #       url: http://loadtester.zap-demo.svc.cluster.local
 #       timeout: 5s
 #       metadata:
-#         cmd: "hey -z 1m -q 10 -c 2 https://zap-podinfo.sec.corbietechnology.com"
+#         cmd: "hey -z 1m -q 10 -c 2 https://zap-podinfo.sec.zaptechnology.com"
 #     - name: run zap
 #       type: post-rollout
 #       url: http://loadtester.zap-demo.svc.cluster.local
 #       timeout: 3m
 #       metadata:
-#         cmd: "curl https://zap.sec.corbietechnology.com/JSON/automation/action/endDelayJob"
+#         cmd: "curl https://zap.sec.zaptechnology.com/JSON/automation/action/endDelayJob"
 
 
 
@@ -239,13 +239,13 @@ spec:
       # Optional: human/automatic gate to start rollout
       - name: start gate
         type: confirm-rollout
-        url: https://zap-loadtester.sec.corbietechnology.com/gate/approve
+        url: https://zap-loadtester.sec.zaptechnology.com/gate/approve
         timeout: 30s
 
       # Spin up a ZAP job (from your CronJob) before shifting traffic
       - name: start zap job
         type: pre-rollout
-        url: https://zap-loadtester.sec.corbietechnology.com
+        url: https://zap-loadtester.sec.zaptechnology.com
         timeout: 3m
         metadata:
           type: cmd
@@ -257,35 +257,35 @@ spec:
       # Internal smoke test through the internal ZAP proxy to the internal service
       - name: integration test (internal via zap)
         type: pre-rollout
-        url: https://zap-loadtester.sec.corbietechnology.com
+        url: https://zap-loadtester.sec.zaptechnology.com
         timeout: 3m
         metadata:
           type: cmd
-          cmd: "curl --fail --proxy http://zap.zap-demo.svc.cluster.local:8080 https://zap-podinfo.sec.corbietechnology.com/api/info"
+          cmd: "curl --fail --proxy http://zap.zap-demo.svc.cluster.local:8080 https://zap-podinfo.sec.zaptechnology.com/api/info"
 
       # Generate load during analysis (internal path)
       - name: load test (internal)
         type: rollout
-        url: https://zap-loadtester.sec.corbietechnology.com
+        url: https://zap-loadtester.sec.zaptechnology.com
         timeout: 15s
         metadata:
           type: cmd
-          cmd: "hey -z 1m -q 10 -c 2  https://zap-podinfo.sec.corbietechnology.com"
+          cmd: "hey -z 1m -q 10 -c 2  https://zap-podinfo.sec.zaptechnology.com"
 
       # Optional: edge smoke test through your ALB/TLS once internal checks pass
       # (keep this if you explicitly want to validate the external path)
       - name: edge smoke test (external via ALB)
         type: rollout
-        url: https://zap-loadtester.sec.corbietechnology.com
+        url: https://zap-loadtester.sec.zaptechnology.com
         timeout: 30s
         metadata:
           type: cmd
-          cmd: "curl --fail https://zap-podinfo.sec.corbietechnology.com/api/info"
+          cmd: "curl --fail https://zap-podinfo.sec.zaptechnology.com/api/info"
 
       # End any ZAP delay/automation job using the **internal service URL**
       - name: end zap delay
         type: post-rollout
-        url: https://zap-loadtester.sec.corbietechnology.com
+        url: https://zap-loadtester.sec.zaptechnology.com
         timeout: 30s
         metadata:
           type: cmd

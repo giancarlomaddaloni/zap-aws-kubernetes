@@ -10,7 +10,7 @@
 ## @param global.imagePullSecrets Global Docker registry secret names as an array
 ##
 global:
-  # imageRegistry: "593518286265.dkr.ecr.us-east-1.amazonaws.com"
+  # imageRegistry: "1XXXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com"
   # image: "bitnami/metrics-server"
   # tag: "0.8.0-debian-12-r1"
   ## E.g.
@@ -84,7 +84,7 @@ diagnosticMode:
 ## @param image.pullSecrets Metrics Server image pull secrets
 ##
 image:
-  registry: 593518286265.dkr.ecr.us-east-1.amazonaws.com
+  registry: 1XXXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com
   repository: bitnami/metrics-server
   tag: 0.8.0-debian-12-r1
   digest: ""

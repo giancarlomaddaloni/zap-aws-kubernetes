@@ -6,7 +6,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 image:
-  repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/aws-appmesh-envoy
+  repository: 1XXXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com/aws-appmesh-envoy
   tag: v1.29.6.0-prod
   pullPolicy: IfNotPresent
   # skipImageOverride: when enabled the App Mesh injector will not override the Envoy image
@@ -62,7 +62,7 @@ serviceAccount:
   # serviceAccount.create: Whether to create a service account or not
   create: false
   # serviceAccount.name: The name of the service account to create or use
-  name: "corbie-sa"
+  name: "zap-sa"
   annotations: {}
 
 rbac:

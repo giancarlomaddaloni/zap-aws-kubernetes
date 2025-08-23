@@ -16,11 +16,11 @@ data:
             pollFrequency: 60
             pollUnits: requests
         excludePaths:
-        - https://zap-podinfo.sec.corbietechnology.com/panic
-        - https://zap-podinfo.sec.corbietechnology.com/status/10
+        - https://zap-podinfo.sec.zaptechnology.com/panic
+        - https://zap-podinfo.sec.zaptechnology.com/status/10
         includePaths:
-        - https://zap-podinfo.sec.corbietechnology.com/*
-        - https://zap-podinfo.sec.corbietechnology.com.*
+        - https://zap-podinfo.sec.zaptechnology.com/*
+        - https://zap-podinfo.sec.zaptechnology.com.*
         name: Default Context
         sessionManagement:
           method: cookie
@@ -28,7 +28,7 @@ data:
         technology:
           exclude: []
         urls:
-        - https://zap-podinfo.sec.corbietechnology.com
+        - https://zap-podinfo.sec.zaptechnology.com
       parameters:
         failOnError: false
         failOnWarning: false
@@ -42,8 +42,8 @@ data:
       type: delay
     - name: openapi
       parameters:
-        apiUrl: https://zap-podinfo.sec.corbietechnology.com/swagger.json
-        targetUrl: https://zap-podinfo.sec.corbietechnology.com
+        apiUrl: https://zap-podinfo.sec.zaptechnology.com/swagger.json
+        targetUrl: https://zap-podinfo.sec.zaptechnology.com
         context: Default Context
       type: openapi
     - name: activeScan

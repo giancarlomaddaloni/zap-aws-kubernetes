@@ -4,7 +4,7 @@
 # annotations: {}
 
 image:
-  repository: 593518286265.dkr.ecr.us-east-1.amazonaws.com/fluxcd/flagger
+  repository: 1XXXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com/fluxcd/flagger
   tag: 1.41.0
   pullPolicy: IfNotPresent
   pullSecret:
@@ -21,7 +21,7 @@ podAnnotations:
 # priority class name for pod priority configuration
 podPriorityClassName: ""
 
-metricsServer: "https://zap-prometheus.sec.corbietechnology.com/"
+metricsServer: "https://zap-prometheus.sec.zaptechnology.com/"
 
 # creates serviceMonitor for monitoring Flagger metrics
 serviceMonitor:
@@ -39,7 +39,7 @@ meshProvider: "appmesh:v1beta2"
 
 # list of pod labels that Flagger uses to create pod selectors
 # defaults to: app,name,app.kubernetes.io/name
-selectorLabels: ""
+selectorLabels:
 
 # when enabled, flagger will track changes in Secrets and ConfigMaps referenced in the target deployment (enabled by default)
 configTracking:
@@ -63,7 +63,7 @@ securityContext:
 eventWebhook: ""
 
 # when specified, flagger will add the cluster name to alerts
-clusterName: "corbie-eks"
+clusterName: "zap-eks"
 
 slack:
   user: flagger
@@ -119,7 +119,7 @@ serviceAccount:
   # serviceAccount.create: Whether to create a service account or not
   create: false
   # serviceAccount.name: The name of the service account to create or use
-  name: "corbie-sa"
+  name: "zap-sa"
   # serviceAccount.annotations: Annotations for service account
   annotations: {}
 

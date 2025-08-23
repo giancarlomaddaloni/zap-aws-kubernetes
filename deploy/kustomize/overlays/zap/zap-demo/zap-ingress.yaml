@@ -9,12 +9,12 @@ metadata:
     # ALB configuration
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/group.name: corbie-sec
+    alb.ingress.kubernetes.io/group.name: zap-sec
     alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27, subnet-04adb4301abb5d25d, subnet-0ed1b6f76c8e8a377
 
     # HTTPS setup
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:1XXXXXXXXXX:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
 
     # Redirect HTTP to HTTPS
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -22,7 +22,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - host: zap.sec.corbietechnology.com
+  - host: zap.sec.zaptechnology.com
     http:
       paths:
       - path: /
@@ -44,12 +44,12 @@ metadata:
     # ALB configuration
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/group.name: corbie-sec
+    alb.ingress.kubernetes.io/group.name: zap-sec
     alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27, subnet-04adb4301abb5d25d, subnet-0ed1b6f76c8e8a377
 
     # HTTPS setup
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:1XXXXXXXXXX:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
 
     # Redirect HTTP to HTTPS
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -57,7 +57,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: zap-podinfo.sec.corbietechnology.com
+    - host: zap-podinfo.sec.zaptechnology.com
       http:
         paths:
           # your API (serve it at /)
@@ -88,12 +88,12 @@ metadata:
     # ALB configuration
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/group.name: corbie-sec
+    alb.ingress.kubernetes.io/group.name: zap-sec
     alb.ingress.kubernetes.io/subnets: subnet-07be2c40291c50b27, subnet-04adb4301abb5d25d, subnet-0ed1b6f76c8e8a377
 
     # HTTPS setup
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:593518286265:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:1XXXXXXXXXX:certificate/921e7d63-7381-454c-90dd-6c8da2f037e2
 
     # Redirect HTTP to HTTPS
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -102,7 +102,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - host: zap-loadtester.sec.corbietechnology.com
+  - host: zap-loadtester.sec.zaptechnology.com
     http:
       paths:
       - path: /healthz
